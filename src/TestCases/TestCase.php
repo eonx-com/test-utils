@@ -7,7 +7,6 @@ use PHPUnit\Framework\TestCase as PHPUnitTestCase;
 
 /**
  * @coversNothing
- *
  */
 abstract class TestCase extends PHPUnitTestCase
 {
