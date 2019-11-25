@@ -30,7 +30,12 @@ final class CodeCoverageValidator implements CodeCoverageValidatorInterface
 
             // If file is unreadable, skip
             if ($contents === false) {
+                // @codeCoverageIgnoreStart
+                // Not possible to test without creating files that the current PHP
+                // process user would not be able to access, but that means the current
+                // user couldnt access them either.
                 continue;
+                // @codeCoverageIgnoreEnd
             }
 
             foreach ($contents as $line) {
