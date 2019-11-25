@@ -24,17 +24,15 @@ abstract class TestCase extends PHPUnitTestCase
             return \dirname($GLOBALS['__PHPUNIT_CONFIGURATION_FILE']);
         }
 
+        // If we dont have argv or there are no arguments to be found, we dont know
+        // how to resolve the root project path.
+        if (isset($GLOBALS['argv']) === false || \count($GLOBALS['argv']) <= 0) {
+            self::fail('Unable to determine project path.');
+        }
+
         // If we've been run by the commandline, lets find the project path based on
         // the phpunit executable, which should be
         // `project_root/vendor/phpunit/phpunit/phpunit`
-        if (isset($GLOBALS['argv']) && \count($GLOBALS['argv']) > 0) {
-            return \dirname($GLOBALS['argv'][0], 4);
-        }
-
-        // I havent been taught to understand project structures :'(
-        self::fail('Unable to determine project path.');
-
-        // Method requires a return because phpstorm cannot understand self::fail
-        return 'never-got-here'; // @codeCoverageIgnore
+        return \dirname($GLOBALS['argv'][0], 4);
     }
 }
