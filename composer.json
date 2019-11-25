@@ -1,0 +1,30 @@
+{
+    "name": "eonx-com/test-utils",
+    "description": "A collection of PHP test utils, assertions stubs and test cases",
+    "type": "library",
+    "license": "BSD-3-Clause",
+    "minimum-stability": "stable",
+    "require": {
+        "php": "^7.3",
+        "phpunit/phpunit": "^8.4"
+    },
+    "require-dev": {
+        "eonx-com/standards": "^0.2.2",
+        "phpmd/phpmd": "^2.7",
+        "phpstan/phpstan": "^0.11.19",
+        "phpstan/phpstan-phpunit": "^0.11.2",
+        "phpstan/phpstan-strict-rules": "^0.11.1",
+        "sebastian/phpcpd": "^4.1",
+        "squizlabs/php_codesniffer": "^3.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Eonx\\TestUtils\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\Eonx\\TestUtils\\": "tests/"
+        }
+    }
+}
