@@ -15,6 +15,11 @@ abstract class TestCase extends PHPUnitTestCase
      * being used for the test run is located).
      *
      * @return string
+     *
+     * @SuppressWarnings(PHPMD.Superglobals) Required to interrogate phpunit's configuration
+     *
+     * @codeCoverageIgnore It isnt possible to test this method without modifying $GLOBALS
+     *   which will interact badly with phpunit while it runs.
      */
     protected function getProjectPath(): string
     {
