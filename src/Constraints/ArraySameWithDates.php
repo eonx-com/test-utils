@@ -5,9 +5,7 @@ namespace Eonx\TestUtils\Constraints;
 
 use DateTimeInterface;
 use PHPUnit\Framework\Constraint\Constraint;
-use PHPUnit\Framework\ExpectationFailedException;
-use SebastianBergmann\Comparator\ComparisonFailure;
-use SebastianBergmann\Comparator\Factory;
+use PHPUnit\Framework\Constraint\IsIdentical;
 
 class ArraySameWithDates extends Constraint
 {
@@ -31,7 +29,7 @@ class ArraySameWithDates extends Constraint
      */
     public function evaluate($other, string $description = '', bool $returnResult = false)
     {
-        // If array can be compared without invoking comparator,
+        // If array can be compared without invoking constraint,
         // that's the best path.
         if ($this->expected === $other) {
             return true;
@@ -51,31 +49,9 @@ class ArraySameWithDates extends Constraint
         \array_walk_recursive($this->expected, $format);
         \array_walk_recursive($other, $format);
 
-        $comparatorFactory = Factory::getInstance();
-
-        try {
-            $comparator = $comparatorFactory->getComparatorFor(
-                $this->expected,
-                $other
-            );
-
-            $comparator->assertEquals(
-                $this->expected,
-                $other
-            );
-
-        }catch (ComparisonFailure $f){
-            if ($returnResult) {
-                return false;
-            }
-
-            throw new ExpectationFailedException(
-                \trim($description . "\n" . $f->getMessage()),
-                $f
-            );
-        }
-
-        return true;
+        // Check that two arrays are identical.
+        $constraint = new IsIdentical($this->expected);
+        return $constraint->evaluate($other);
     }
 
     /**
