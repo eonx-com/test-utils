@@ -5,6 +5,7 @@ namespace Eonx\TestUtils\TestCases\Traits;
 
 use Eonx\TestUtils\Constraints\ArraySameWithDates;
 use Eonx\TestUtils\Constraints\JsonSameAsArray;
+use PHPUnit\Framework\Constraint\Constraint;
 
 trait AssertTrait
 {
@@ -13,16 +14,16 @@ trait AssertTrait
      *
      * @param mixed[] $expected
      * @param mixed[] $actual
+     * @param string $message
      *
      * @return void
      *
-     * @throws \Exception
      */
-    public static function assertArraySameWithDates(array $expected, array $actual): void
+    public static function assertArraySameWithDates(array $expected, array $actual, string $message = ''): void
     {
         $constraint = new ArraySameWithDates($expected);
 
-        static::assertThat($actual, $constraint);
+        static::assertThat($actual, $constraint, $message);
     }
 
     /**
@@ -45,4 +46,15 @@ trait AssertTrait
 
         static::assertThat($actual, $constraint, $message);
     }
+
+    /**
+     * Base assertThat method to make sure trait user implements this.
+     * This method is same signature as phpunit's base Assert::assertThat.
+     *
+     * @param mixed $value
+     * @param \PHPUnit\Framework\Constraint\Constraint $constraint
+     *
+     * @param string $message
+     */
+    abstract protected static function assertThat($value, Constraint $constraint, string $message = ''): void;
 }
