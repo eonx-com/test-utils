@@ -7,6 +7,9 @@ use Eonx\TestUtils\Constraints\ArraySameWithDates;
 use Eonx\TestUtils\Constraints\JsonSameAsArray;
 use PHPUnit\Framework\Constraint\Constraint;
 
+/**
+ * AssertTrait that contains all custom assertions.
+ */
 trait AssertTrait
 {
     /**
@@ -17,7 +20,6 @@ trait AssertTrait
      * @param string $message
      *
      * @return void
-     *
      */
     public static function assertArraySameWithDates(array $expected, array $actual, string $message = ''): void
     {
@@ -29,7 +31,7 @@ trait AssertTrait
     /**
      * Run an assertion against JSON string to an expected array of results, skipping certain time related keys
      * example:
-     * $this->>assertJsonEqualsStringFuzzily(
+     * static::assertJsonEqualsStringFuzzily(
      *      ['date' => ':fuzzy:', 'example' => true],
      *      '{"date": "2019-02-02", "example": true}'
      * );.
@@ -53,8 +55,9 @@ trait AssertTrait
      *
      * @param mixed $value
      * @param \PHPUnit\Framework\Constraint\Constraint $constraint
-     *
      * @param string $message
+     *
+     * @return void
      */
     abstract protected static function assertThat($value, Constraint $constraint, string $message = ''): void;
 }
