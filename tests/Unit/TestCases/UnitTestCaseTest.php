@@ -5,7 +5,6 @@ namespace Tests\Eonx\TestUtils\Unit\TestCases;
 
 use DateTime;
 use Eonx\TestUtils\TestCases\UnitTestCase;
-use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\AssertionFailedError;
 
 /**
@@ -94,13 +93,5 @@ class UnitTestCaseTest extends UnitTestCase
         $this->expectExceptionMessage('Failed asserting that two arrays are identical.');
 
         self::assertArraySameWithDates($expected, $actual);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected static function getAssert(): Assert
-    {
-        return new self;
     }
 }
