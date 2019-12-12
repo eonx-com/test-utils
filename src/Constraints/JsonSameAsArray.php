@@ -34,7 +34,7 @@ class JsonSameAsArray extends Constraint
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function toString(): string
     {
@@ -47,11 +47,8 @@ class JsonSameAsArray extends Constraint
     /**
      * {@inheritdoc}
      */
-    protected function matches($other): bool
+    public function evaluate($other, string $description = '', bool $returnResult = false)
     {
-        if (\is_string($other) === false) {
-            return false;
-        }
         $isJson = new IsJson();
         $isJson->evaluate($other, 'String is not a valid JSON.');
 
@@ -64,7 +61,6 @@ class JsonSameAsArray extends Constraint
         );
 
         $isSame = new IsIdentical($this->expected);
-
-        return $isSame->evaluate($fuzzyActual, '', true);
+        return $isSame->evaluate($fuzzyActual, $description, $returnResult);
     }
 }

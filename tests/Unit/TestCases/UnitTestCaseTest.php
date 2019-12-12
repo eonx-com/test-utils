@@ -94,4 +94,38 @@ class UnitTestCaseTest extends UnitTestCase
 
         self::assertArraySameWithDates($expected, $actual);
     }
+
+    /**
+     * Assert that json can be asserted against its decoded array representation.
+     *
+     * @return void
+     *
+     * @throws \Exception
+     */
+    public function testJsonSameAsArray(): void
+    {
+        $json = '{"abc": "xyz", "date": "2019-10-10T01:04:45Z"}';
+        $expected = ['abc' => 'xyz', 'date' => ':fuzzy:'];
+
+        self::assertJsonEqualsStringFuzzily($expected, $json);
+    }
+
+    /**
+     * Assert that json can be asserted against its decoded array representation.
+     * In this case the test fails.
+     *
+     * @return void
+     *
+     * @throws \Exception
+     */
+    public function testJsonSameAsArrayFails(): void
+    {
+        $json = '{"abc": "xyz", "date": "2019-10-10T01:04:45Z"}';
+        $expected = ['xyz' => 'abc', 'date' => ':fuzzy:'];
+
+        $this->expectException(AssertionFailedError::class);
+        $this->expectExceptionMessage('Failed asserting that two arrays are identical.');
+
+        self::assertJsonEqualsStringFuzzily($expected, $json);
+    }
 }
