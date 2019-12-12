@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Unit\Constraints;
+namespace Tests\Eonx\TestUtils\Unit\Constraints;
 
 use DateTime;
 use Eonx\TestUtils\Constraints\ArraySameWithDates;

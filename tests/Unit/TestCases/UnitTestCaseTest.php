@@ -1,12 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace Unit\TestCases;
+namespace Tests\Eonx\TestUtils\Unit\TestCases;
 
 use DateTime;
-use Eonx\TestUtils\TestCases\UnitTestCase;
 use PHPUnit\Framework\AssertionFailedError;
 use PHPUnit\Framework\TestCase;
+use Tests\Eonx\TestUtils\Stubs\TestCases\UnitTestCaseStub;
 
 /**
  * @covers \Eonx\TestUtils\TestCases\UnitTestCase
@@ -22,7 +22,7 @@ class UnitTestCaseTest extends TestCase
      */
     public function testArraySameWithDates(): void
     {
-        $test = new UnitTestCase();
+        $test = new UnitTestCaseStub();
 
         $expected = [
             'random' => 'value',
@@ -52,11 +52,13 @@ class UnitTestCaseTest extends TestCase
     /**
      * Test assertions fails when dates don't match.
      *
+     * @return void
+     *
      * @throws \Exception
      */
     public function testArraySameWithDatesFails(): void
     {
-        $test = new UnitTestCase();
+        $test = new UnitTestCaseStub();
 
         $expected = [
             'random' => 'value',
@@ -84,7 +86,7 @@ class UnitTestCaseTest extends TestCase
      */
     public function testArraySameWithDatesFromDifferentTimeZones(): void
     {
-        $test = new UnitTestCase();
+        $test = new UnitTestCaseStub();
 
         $expected = [
             'random' => 'value',

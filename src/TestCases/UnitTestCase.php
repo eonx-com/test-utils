@@ -5,7 +5,7 @@ namespace Eonx\TestUtils\TestCases;
 
 use Eonx\TestUtils\TestCases\Traits\AssertTrait;
 
-class UnitTestCase extends TestCase
+abstract class UnitTestCase extends TestCase
 {
     use AssertTrait;
 }
