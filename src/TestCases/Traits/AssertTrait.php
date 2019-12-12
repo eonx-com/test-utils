@@ -4,8 +4,6 @@ declare(strict_types=1);
 namespace Eonx\TestUtils\TestCases\Traits;
 
 use Eonx\TestUtils\Constraints\ArraySameWithDates;
-use Eonx\TestUtils\TestCases\Exceptions\InvalidParentClassException;
-use PHPUnit\Framework\Assert;
 
 trait AssertTrait
 {
