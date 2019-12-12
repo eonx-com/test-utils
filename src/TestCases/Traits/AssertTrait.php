@@ -15,7 +15,7 @@ trait AssertTrait
     public function __construct()
     {
         if ($this instanceof TestCase === false) {
-            throw new InvalidParentClassException('Trait must be used within an Eonx\\TestUtils\\TestCases class.');
+            throw new InvalidParentClassException('AssertTrait must be used by an Eonx\\TestUtils\\TestCases class.');
         }
     }
 
