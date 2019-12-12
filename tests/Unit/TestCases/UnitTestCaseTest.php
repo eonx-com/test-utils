@@ -4,14 +4,14 @@ declare(strict_types=1);
 namespace Tests\Eonx\TestUtils\Unit\TestCases;
 
 use DateTime;
+use Eonx\TestUtils\TestCases\UnitTestCase;
+use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\AssertionFailedError;
-use PHPUnit\Framework\TestCase;
-use Tests\Eonx\TestUtils\Stubs\TestCases\UnitTestCaseStub;
 
 /**
  * @covers \Eonx\TestUtils\TestCases\UnitTestCase
  */
-class UnitTestCaseTest extends TestCase
+class UnitTestCaseTest extends UnitTestCase
 {
     /**
      * Test array same with dates works fine with date instances.
@@ -22,8 +22,6 @@ class UnitTestCaseTest extends TestCase
      */
     public function testArraySameWithDates(): void
     {
-        $test = new UnitTestCaseStub();
-
         $expected = [
             'random' => 'value',
             'date' => new DateTime('2019-10-10T00:00:00Z'),
@@ -44,9 +42,7 @@ class UnitTestCaseTest extends TestCase
             ]
         ];
 
-        $test->assertArraySameWithDates($expected, $actual);
-
-        $this->addToAssertionCount(1);
+        self::assertArraySameWithDates($expected, $actual);
     }
 
     /**
@@ -58,8 +54,6 @@ class UnitTestCaseTest extends TestCase
      */
     public function testArraySameWithDatesFails(): void
     {
-        $test = new UnitTestCaseStub();
-
         $expected = [
             'random' => 'value',
             'date' => new DateTime('2019-10-10T00:00:01Z')
@@ -73,7 +67,7 @@ class UnitTestCaseTest extends TestCase
         $this->expectException(AssertionFailedError::class);
         $this->expectExceptionMessage('Failed asserting that two arrays are identical.');
 
-        $test->assertArraySameWithDates($expected, $actual);
+        self::assertArraySameWithDates($expected, $actual);
     }
 
     /**
@@ -86,8 +80,6 @@ class UnitTestCaseTest extends TestCase
      */
     public function testArraySameWithDatesFromDifferentTimeZones(): void
     {
-        $test = new UnitTestCaseStub();
-
         $expected = [
             'random' => 'value',
             'date' => new DateTime('2019-10-10T00:00:00+0100')
@@ -101,6 +93,14 @@ class UnitTestCaseTest extends TestCase
         $this->expectException(AssertionFailedError::class);
         $this->expectExceptionMessage('Failed asserting that two arrays are identical.');
 
-        $test->assertArraySameWithDates($expected, $actual);
+        self::assertArraySameWithDates($expected, $actual);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected static function getAssert(): Assert
+    {
+        return new self;
     }
 }
