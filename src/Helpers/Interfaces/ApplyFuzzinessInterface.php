@@ -12,12 +12,12 @@ interface ApplyFuzzinessInterface
     /**
      * Apply fuzziness from expected array to actual array.
      *
-     * @param array $actual
-     * @param array $expected
+     * @param mixed[] $actual
+     * @param mixed[] $expected
      * @param string $fuzzyValue
-     * @param array|null $keys
+     * @param mixed[]|null $keys
      *
-     * @return array Returns the actual array with fuzziness applied.
+     * @return mixed[] Returns the actual array with fuzziness applied.
      */
     public function apply(array $actual, array $expected, string $fuzzyValue, ?array $keys = null): array;
 }

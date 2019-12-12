@@ -35,22 +35,13 @@ class JsonSameAsArray extends Constraint
 
     /**
      * {@inheritdoc}
-     */
-    public function toString(): string
-    {
-        return \sprintf(
-            'is same as %s',
-            $this->exporter()->export($this->expected)
-        );
-    }
-
-    /**
-     * {@inheritdoc}
+     *
+     * @SuppressWarnings(PHPMD.BooleanArgumentFlag) Designed by base phpunit constraint.
      */
     public function evaluate($other, string $description = '', bool $returnResult = false)
     {
         $isJson = new IsJson();
-        $isJson->evaluate($other, 'String is not a valid JSON.');
+        $isJson->evaluate($other, $description, $returnResult);
 
         $actualDecoded = \json_decode((string)$other, true, 512, \JSON_THROW_ON_ERROR);
 
@@ -62,5 +53,16 @@ class JsonSameAsArray extends Constraint
 
         $isSame = new IsIdentical($this->expected);
         return $isSame->evaluate($fuzzyActual, $description, $returnResult);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function toString(): string
+    {
+        return \sprintf(
+            'is same as %s',
+            $this->exporter()->export($this->expected)
+        );
     }
 }

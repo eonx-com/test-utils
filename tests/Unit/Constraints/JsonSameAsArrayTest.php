@@ -40,7 +40,9 @@ class JsonSameAsArrayTest extends TestCase
 
         $this->expectException(AssertionFailedError::class);
         $this->expectExceptionMessage(
-            'Failed asserting that \'{"abc": xyz}\' is valid JSON (Syntax error, malformed JSON'
+            <<<EOF
+Failed asserting that '{"abc": xyz}' is valid JSON (Syntax error, malformed JSON).
+EOF
         );
         $constraint->evaluate($invalidJson);
     }

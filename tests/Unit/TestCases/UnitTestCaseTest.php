@@ -128,4 +128,27 @@ class UnitTestCaseTest extends UnitTestCase
 
         self::assertJsonEqualsStringFuzzily($expected, $json);
     }
+
+    /**
+     * Assert that json can be asserted against its decoded array representation.
+     * In this case the test fails.
+     *
+     * @return void
+     *
+     * @throws \Exception
+     */
+    public function testJsonSameAsArrayWithInvalidJson(): void
+    {
+        $json = '{"abc": "xyz}';
+        $expected = ['abc' => 'xyz'];
+
+        $this->expectException(AssertionFailedError::class);
+        $this->expectExceptionMessage(
+            <<<EOF
+Failed asserting that '{"abc": "xyz}' is valid JSON (Unexpected control character found).
+EOF
+        );
+
+        self::assertJsonEqualsStringFuzzily($expected, $json);
+    }
 }
