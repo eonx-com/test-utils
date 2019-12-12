@@ -51,7 +51,7 @@ class ArraySameWithDates extends Constraint
 
         // Check that two arrays are identical.
         $constraint = new IsIdentical($this->expected);
-        return $constraint->evaluate($other);
+        return $constraint->evaluate($other, $description, $returnResult);
     }
 
     /**
