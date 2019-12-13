@@ -12,6 +12,7 @@
     "phpunit/phpunit": "^8.4"
   },
   "require-dev": {
+    "eonx-com/apiformats": "^1.0",
     "eonx-com/standards": "^0.2.2",
     "phpmd/phpmd": "^2.7",
     "phpstan/phpstan": "^0.11.19",
