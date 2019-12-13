@@ -5,7 +5,9 @@ namespace Eonx\TestUtils\TestCases\Traits;
 
 use Eonx\TestUtils\Constraints\ArraySameWithDates;
 use Eonx\TestUtils\Constraints\JsonSameAsArray;
+use Eonx\TestUtils\Constraints\ResponseNoException;
 use PHPUnit\Framework\Constraint\Constraint;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * AssertTrait that contains all custom assertions.
@@ -47,6 +49,20 @@ trait AssertTrait
         $constraint = new JsonSameAsArray($expected);
 
         static::assertThat($actual, $constraint, $message);
+    }
+
+    /**
+     * Asserts that the response was not an exception.
+     *
+     * @param \Symfony\Component\HttpFoundation\Response $response
+     *
+     * @return void
+     */
+    public static function assertResponseNoException(Response $response): void
+    {
+        $constraint = new ResponseNoException();
+
+        static::assertThat($response, $constraint);
     }
 
     /**

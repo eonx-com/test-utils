@@ -6,7 +6,6 @@ namespace Tests\Eonx\TestUtils\Unit\Constraints;
 use Eonx\TestUtils\Constraints\ResponseNoException;
 use PHPUnit\Framework\AssertionFailedError;
 use PHPUnit\Framework\TestCase;
-use SebastianBergmann\Exporter\Exporter;
 use stdClass;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -20,7 +19,7 @@ class ResponseNoExceptionTest extends TestCase
      * evaluate. The result can be either a true or false based
      * on if the constraint evaluation passes or not.
      *
-     * @return mixed
+     * @return mixed[]
      */
     public function generateReturnResultCases(): iterable
     {
@@ -103,7 +102,6 @@ EOF
             <<<EOF
 Failed asserting that stdClass Object () is an instance of class "Symfony\Component\HttpFoundation\Response".
 EOF
-
         );
 
         $constraint->evaluate(new stdClass());
