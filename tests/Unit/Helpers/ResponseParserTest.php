@@ -21,6 +21,12 @@ class ResponseParserTest extends TestCase
      */
     public function generateParseErrorCases(): iterable
     {
+        yield 'Empty response' => [
+            'content' => '',
+            'exception' => null,
+            'result' => null,
+        ];
+
         yield 'Is not a valid json' => [
             'content' => '{abc}',
             'exception' => new NoValidResponseException('Could not extract valid JSON or XML from response: {abc}'), //phpcs:ignore

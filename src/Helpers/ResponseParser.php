@@ -18,6 +18,11 @@ class ResponseParser implements ResponseParserInterface
     {
         $content = (string)$response->getContent();
 
+        // if empty string, return early
+        if ($content === '') {
+            return null;
+        }
+
         $constraint = new IsJson();
         $isJson = $constraint->evaluate($content, '', true);
 

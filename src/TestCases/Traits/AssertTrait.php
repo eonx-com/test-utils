@@ -3,10 +3,12 @@ declare(strict_types=1);
 
 namespace Eonx\TestUtils\TestCases\Traits;
 
+use EoneoPay\ApiFormats\Bridge\Laravel\Responses\NoContentApiResponse;
 use Eonx\TestUtils\Constraints\ArraySameWithDates;
 use Eonx\TestUtils\Constraints\JsonSameAsArray;
 use Eonx\TestUtils\Constraints\ResponseNoException;
 use PHPUnit\Framework\Constraint\Constraint;
+use PHPUnit\Framework\Constraint\IsIdentical;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -28,6 +30,36 @@ trait AssertTrait
         $constraint = new ArraySameWithDates($expected);
 
         static::assertThat($actual, $constraint, $message);
+    }
+
+    /**
+     * Assert that a response is of the expected type.
+     *
+     * @param int $expectedStatus
+     * @param \Symfony\Component\HttpFoundation\Response $response
+     *
+     * @return void
+     */
+    public static function assertEmptyResponse(int $expectedStatus, Response $response): void
+    {
+        if ($response instanceof NoContentApiResponse === false) {
+            self::assertResponseNoException($response);
+        }
+
+        static::assertThat(
+            $response->getContent(),
+            new IsIdentical(''),
+            \sprintf('Expected response to be empty but contained: %s', $response->getContent())
+        );
+        static::assertThat(
+            $response->getStatusCode(),
+            new IsIdentical($expectedStatus),
+            \sprintf(
+                'Expected response status to be %s but found %s',
+                $expectedStatus,
+                $response->getStatusCode()
+            )
+        );
     }
 
     /**
