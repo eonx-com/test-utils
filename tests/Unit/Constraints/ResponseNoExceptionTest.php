@@ -34,7 +34,7 @@ class ResponseNoExceptionTest extends TestCase
         ];
 
         yield 'Response does not has a valid json or xml. ' => [
-            'object' => new Response(''),
+            'object' => new Response('da'),
             'result' => false
         ];
 
@@ -52,7 +52,7 @@ class ResponseNoExceptionTest extends TestCase
      */
     public function testEvaluateFailsWhenResponseIsNotJsonOrXml(): void
     {
-        $response = new Response('');
+        $response = new Response('abc');
         $constraint = new ResponseNoException();
 
         $this->expectException(AssertionFailedError::class);
