@@ -27,6 +27,7 @@ class ResponseException
 
     /**
      * ResponseException constructor.
+     *
      * @param string $code
      * @param string $message
      * @param string $subCode

@@ -58,7 +58,7 @@ class ResponseParser implements ResponseParserInterface
     /**
      * Prepare ResponseException from content.
      *
-     * @param array $contents
+     * @param mixed[] $contents
      *
      * @return \Eonx\TestUtils\DataTransferObjects\ResponseException|null
      */

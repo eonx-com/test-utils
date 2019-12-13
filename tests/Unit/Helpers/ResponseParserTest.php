@@ -23,18 +23,18 @@ class ResponseParserTest extends TestCase
     {
         yield 'Is not a valid json' => [
             'content' => '{abc}',
-            'exception' => new NoValidResponseException('Could not extract valid JSON or XML from response: {abc}'),
+            'exception' => new NoValidResponseException('Could not extract valid JSON or XML from response: {abc}'), //phpcs:ignore
             'result' => null,
         ];
 
         yield 'Is not a valid xml' => [
             'content' => '<xml>&</xml>',
-            'exception' => new NoValidResponseException('Could not extract valid JSON or XML from response: <xml>&</xml>'),
+            'exception' => new NoValidResponseException('Could not extract valid JSON or XML from response: <xml>&</xml>'),  //phpcs:ignore
             'result' => null,
         ];
 
         yield 'Parse error from json' => [
-            'content' => '{"code": "1", "sub_code": "2", "message": "Exception thrown.", "violations": {"key": "missing"}}',
+            'content' => '{"code": "1", "sub_code": "2", "message": "Exception thrown.", "violations": {"key": "missing"}}',  //phpcs:ignore
             'exception' => null,
             'result' => new ResponseException(
                 '1',
@@ -45,7 +45,7 @@ class ResponseParserTest extends TestCase
         ];
 
         yield 'Parse error from xml' => [
-            'content' => '<xml><code>1</code><sub_code>2</sub_code><message>Exception thrown.</message><violations><key>missing</key></violations></xml>',
+            'content' => '<xml><code>1</code><sub_code>2</sub_code><message>Exception thrown.</message><violations><key>missing</key></violations></xml>',  //phpcs:ignore
             'exception' => null,
             'result' => new ResponseException(
                 '1',
