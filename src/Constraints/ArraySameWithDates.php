@@ -31,6 +31,10 @@ class ArraySameWithDates extends Constraint
      */
     public function evaluate($other, string $description = '', bool $returnResult = false)
     {
+        if (\is_array($other) === false) {
+            $this->fail($other, $description);
+        }
+
         // If array can be compared without invoking constraint,
         // that's the best path.
         if ($this->expected === $other) {
@@ -53,6 +57,7 @@ class ArraySameWithDates extends Constraint
 
         // Check that two arrays are identical.
         $constraint = new IsIdentical($this->expected);
+
         return $constraint->evaluate($other, $description, $returnResult);
     }
 
@@ -61,6 +66,9 @@ class ArraySameWithDates extends Constraint
      */
     public function toString(): string
     {
-        return 'arrays are same with flat dates';
+        return \sprintf(
+            'is same as %s',
+            $this->exporter()->export($this->expected)
+        );
     }
 }

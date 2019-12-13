@@ -5,6 +5,7 @@ namespace Tests\Eonx\TestUtils\Unit\Constraints;
 
 use DateTime;
 use Eonx\TestUtils\Constraints\ArraySameWithDates;
+use PHPUnit\Framework\AssertionFailedError;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -48,6 +49,41 @@ class ArraySameWithDatesTest extends TestCase
     }
 
     /**
+     * Test evaluate fails when the arrays don't match.
+     *
+     * @return void
+     *
+     * @throws \Exception
+     */
+    public function testEvaluateFailsWhenArrayNotSame(): void
+    {
+        $actual = [
+            'random' => 'value',
+            'date' => new DateTime('2019-10-10T01:01:01Z'),
+            'deep' => [
+                'deeper' => [
+                    'date' => new DateTime('2019-10-10T00:00:00+0000'),
+                ]
+            ]
+        ];
+
+        $expected = [
+            'random' => 'value',
+            'date' => new DateTime('2019-10-10T00:00:00Z'),
+            'deep' => [
+                'deeper' => [
+                    'date' => new DateTime('2019-10-10T00:00:00+0000'),
+                ]
+            ]
+        ];
+
+        $constraint = new ArraySameWithDates($expected);
+        $result = $constraint->evaluate($actual, '', true);
+
+        self::assertFalse($result);
+    }
+
+    /**
      * Assert that evaluate returns early when arrays don't contain any objects
      * to compare. In that case it can use simple === comparator to make sure
      * arrays are same.
@@ -73,7 +109,7 @@ class ArraySameWithDatesTest extends TestCase
     }
 
     /**
-     * Test to string returns expected string.
+     * Test to string returns expected string error.
      *
      * @return void
      */
@@ -81,8 +117,11 @@ class ArraySameWithDatesTest extends TestCase
     {
         $constraint = new ArraySameWithDates([]);
 
-        $string = $constraint->toString();
-
-        self::assertSame('arrays are same with flat dates', $string);
+        $this->expectException(AssertionFailedError::class);
+        $this->expectExceptionMessage(<<<EOF
+'' is same as Array &0 ()
+EOF
+        );
+        $constraint->evaluate('');
     }
 }
