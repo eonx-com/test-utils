@@ -84,6 +84,49 @@ trait AssertTrait
     }
 
     /**
+     * Assert an HTTP response matches the expected response contents and response code.
+     *
+     * If the code does not match, the response will still be checked. If an error is present, the error message, code
+     *  and sub code will be set as a failure message.
+     *
+     * @param mixed[] $expectedContent Expected contents.
+     * @param int $expectedStatus Expected HTTP status code.
+     * @param \Symfony\Component\HttpFoundation\Response $response Actual HTTP response object.
+     *
+     * @return void
+     */
+    public static function assertResponse(
+        array $expectedContent,
+        int $expectedStatus,
+        Response $response
+    ): void {
+        $content = (string)$response->getContent();
+
+        // If status codes match, just check response.
+        if ($expectedStatus === $response->getStatusCode()) {
+            static::assertThat($response->getStatusCode(), new IsIdentical($expectedStatus));
+            static::assertJsonEqualsStringFuzzily($expectedContent, $content);
+
+            return;
+        }
+
+        // Status codes did not match, thus check if response has an exception.
+        static::assertResponseNoException($response);
+        // No exception found, compare the expected and actual.
+        static::assertJsonEqualsStringFuzzily($expectedContent, $content);
+        // Excepted matches actual response, that means status is a mismatch.
+        static::assertThat(
+            $response->getStatusCode(),
+            new IsIdentical($expectedStatus),
+            \sprintf(
+                'Content matched, but expected HTTP status code (%s) did not match actual (%s) code.',
+                $expectedStatus,
+                $response->getStatusCode()
+            )
+        );
+    }
+
+    /**
      * Asserts that the response was not an exception.
      *
      * @param \Symfony\Component\HttpFoundation\Response $response
