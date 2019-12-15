@@ -24,12 +24,12 @@ class SymfonyConstraintViolationTest extends TestCase
     public function generateTestEvaluateCases(): iterable
     {
         yield 'Invalid constraint violation list object' => [
-        'list' => new stdClass(),
-        'expected' => '',
-        'error' => new AssertionFailedError(
-            'Supplied list is not a valid constraint violation list.'
-        )
-    ];
+            'list' => new stdClass(),
+            'expected' => '',
+            'error' => new AssertionFailedError(
+                'Supplied list is not a valid constraint violation list.'
+            )
+        ];
 
         yield 'Custom constraint validation list has __toString()' =>
         [
@@ -98,7 +98,7 @@ ERR,
     /**
      * Test evaluate method.
      *
-     * @param mixed $list mixed for testing purpose.
+     * @param mixed $list Mixed for testing purpose.
      * @param string $expected
      * @param \PHPUnit\Framework\AssertionFailedError|null $error
      *

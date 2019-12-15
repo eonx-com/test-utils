@@ -28,6 +28,8 @@ class SymfonyConstraintViolation extends Constraint
 
     /**
      * {@inheritdoc}
+     *
+     * @SuppressWarnings(PHPMD.BooleanArgumentFlag) Designed by base phpunit constraint.
      */
     public function evaluate($other, string $description = '', bool $returnResult = false)
     {
@@ -53,14 +55,14 @@ class SymfonyConstraintViolation extends Constraint
 
         if ($result === false) {
             // Create comparision to generate a diff.
-            $f = new ComparisonFailure(
+            $comparision = new ComparisonFailure(
                 $this->expected,
                 $other,
                 \sprintf("'%s'", $this->expected),
-                \sprintf("'%s'", $other)
+                \sprintf("'%s'", $toString())
             );
 
-            $this->fail($other, $description, $f);
+            $this->fail($other, $description, $comparision);
         }
     }
 
