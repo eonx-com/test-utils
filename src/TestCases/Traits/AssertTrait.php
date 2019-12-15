@@ -5,11 +5,13 @@ namespace Eonx\TestUtils\TestCases\Traits;
 
 use EoneoPay\ApiFormats\Bridge\Laravel\Responses\NoContentApiResponse;
 use Eonx\TestUtils\Constraints\ArraySameWithDates;
+use Eonx\TestUtils\Constraints\SymfonyConstraintViolation;
 use Eonx\TestUtils\Constraints\JsonSameAsArray;
 use Eonx\TestUtils\Constraints\ResponseNoException;
 use PHPUnit\Framework\Constraint\Constraint;
 use PHPUnit\Framework\Constraint\IsIdentical;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Validator\ConstraintViolationListInterface;
 
 /**
  * AssertTrait that contains all custom assertions.
@@ -138,6 +140,21 @@ trait AssertTrait
         $constraint = new ResponseNoException();
 
         static::assertThat($response, $constraint);
+    }
+
+    /**
+     * Asserts that the violation list results in a given string output.
+     *
+     * @param string $expected
+     * @param \Symfony\Component\Validator\ConstraintViolationListInterface $violationList
+     *
+     * @return void
+     */
+    public static function assertConstraints(string $expected, ConstraintViolationListInterface $violationList): void
+    {
+        $constraint = new SymfonyConstraintViolation($expected);
+
+        static::assertThat($violationList, $constraint);
     }
 
     /**
