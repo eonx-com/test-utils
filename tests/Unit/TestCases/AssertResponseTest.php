@@ -20,14 +20,14 @@ class AssertResponseTest extends UnitTestCase
     public function generateTestCases(): iterable
     {
         yield 'Response and status match.' => [
-            'response' => new Response('{}', 202),
+            'response' => new Response('{}', 202, ['content-type' => 'application/json']),
             'expectedStatus' => 202,
             'expectedContent' => [],
             'exception' => null
         ];
 
         yield 'Response matches but status does not.' => [
-            'response' => new Response('{}', 202),
+            'response' => new Response('{}', 202, ['content-type' => 'application/json']),
             'expectedStatus' => 204,
             'expectedContent' => [],
             'exception' => new AssertionFailedError(
@@ -36,14 +36,18 @@ class AssertResponseTest extends UnitTestCase
         ];
 
         yield 'Status matches but response content does not.' => [
-            'response' => new Response('{"abc": "xyz"}', 202),
+            'response' => new Response('{"abc": "xyz"}', 202, ['content-type' => 'application/json']),
             'expectedStatus' => 202,
             'expectedContent' => [],
             'exception' => new AssertionFailedError('Failed asserting that two arrays are identical.')
         ];
 
         yield 'Response can be matched fuzzily' => [
-            'response' => new Response('{"abc": "xyz", "date": "2019-10-10"}', 200),
+            'response' => new Response(
+                '{"abc": "xyz", "date": "2019-10-10"}',
+                200,
+                ['content-type' => 'application/json']
+            ),
             'expectedStatus' => 200,
             'expectedContent' => [
                 'abc' => 'xyz',
@@ -55,7 +59,8 @@ class AssertResponseTest extends UnitTestCase
         yield 'Response has an exception' => [
             'response' => new Response(
                 '{"code": "5400", "sub_code": "1", "message": "Validation failed.", "violations": {"key": "missing"}}',
-                400
+                400,
+                ['content-type' => 'application/json']
             ),
             'expectedStatus' => 200,
             'expectedContent' => [],

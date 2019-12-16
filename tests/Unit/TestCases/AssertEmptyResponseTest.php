@@ -44,7 +44,7 @@ class AssertEmptyResponseTest extends UnitTestCase
      */
     public function testAssertionFailsWhenResponseNotEmpty(): void
     {
-        $response = new Response('{}', 204);
+        $response = new Response('{}', 204, ['content-type' => 'application/json']);
 
         $this->expectException(AssertionFailedError::class);
         $this->expectExceptionMessage('Expected response to be empty but contained: {}');

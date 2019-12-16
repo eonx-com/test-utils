@@ -22,25 +22,40 @@ class ResponseParserTest extends TestCase
     public function generateParseErrorCases(): iterable
     {
         yield 'Empty response' => [
-            'content' => '',
+            'content' => new Response(''),
             'exception' => null,
             'result' => null,
         ];
 
+        yield 'When no content-type is set' => [
+            'content' => new Response('{}'),
+            'exception' => new NoValidResponseException(
+                'Response does not contain a valid content-type header.'
+            ),
+            'result' => null
+        ];
+
         yield 'Is not a valid json' => [
-            'content' => '{abc}',
-            'exception' => new NoValidResponseException('Could not extract valid JSON or XML from response: {abc}'), //phpcs:ignore
+            'content' => new Response('{abc}', 200, ['content-type' => 'application/json']),
+            'exception' => new NoValidResponseException(
+                'Could not extract valid JSON from response: {abc}. Failed with: Syntax error'
+            ),
             'result' => null,
         ];
 
         yield 'Is not a valid xml' => [
-            'content' => '<xml>&</xml>',
-            'exception' => new NoValidResponseException('Could not extract valid JSON or XML from response: <xml>&</xml>'),  //phpcs:ignore
+            'content' => new Response('<xml>&</xml>', 200, ['content-type' => 'application/xml']),
+            'exception' => new NoValidResponseException('Could not extract valid XML from response: <xml>&</xml>'), //phpcs:ignore
             'result' => null,
         ];
 
         yield 'Parse error from json' => [
-            'content' => '{"code": "1", "sub_code": "2", "message": "Exception thrown.", "violations": {"key": "missing"}}',  //phpcs:ignore
+            'content' => new Response(
+                '{"code": "1", "sub_code": "2", "message": "Exception thrown.", "violations": {"key": "missing"}}',
+                //phpcs:ignore
+                400,
+                ['content-type' => 'application/json']
+            ),
             'exception' => null,
             'result' => new ResponseException(
                 '1',
@@ -51,7 +66,11 @@ class ResponseParserTest extends TestCase
         ];
 
         yield 'Parse error from xml' => [
-            'content' => '<xml><code>1</code><sub_code>2</sub_code><message>Exception thrown.</message><violations><key>missing</key></violations></xml>',  //phpcs:ignore
+            'content' => new Response(
+                '<xml><code>1</code><sub_code>2</sub_code><message>Exception thrown.</message><violations><key>missing</key></violations></xml>', //phpcs:ignore
+                400,
+                ['content-type' => 'application/xml']
+            ),
             'exception' => null,
             'result' => new ResponseException(
                 '1',
@@ -62,7 +81,7 @@ class ResponseParserTest extends TestCase
         ];
 
         yield 'Parse returns null when no exception found' => [
-            'content' => '{}',
+            'content' => new Response('{}', 200, ['content-type' => 'application/json']),
             'exception' => null,
             'result' => null
         ];
@@ -71,7 +90,7 @@ class ResponseParserTest extends TestCase
     /**
      * Test parsing errors from response object.
      *
-     * @param string $content
+     * @param \Symfony\Component\HttpFoundation\Response $response
      * @param \Eonx\TestUtils\Helpers\Exceptions\NoValidResponseException|null $exception
      * @param \Eonx\TestUtils\DataTransferObjects\ResponseException|null $result
      *
@@ -80,12 +99,10 @@ class ResponseParserTest extends TestCase
      * @dataProvider generateParseErrorCases
      */
     public function testParseError(
-        string $content,
+        Response $response,
         ?NoValidResponseException $exception,
         ?ResponseException $result
     ): void {
-        $response = new Response($content);
-
         $parser = new ResponseParser();
 
         if ($exception !== null) {

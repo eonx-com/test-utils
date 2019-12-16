@@ -29,7 +29,11 @@ class ResponseNoExceptionTest extends TestCase
         ];
 
         yield 'Response has exception.' => [
-            'object' => new Response('{"code": "1", "sub_code": "2", "message": "Exception thrown."}'),
+            'object' => new Response(
+                '{"code": "1", "sub_code": "2", "message": "Exception thrown."}',
+                400,
+                ['content-type' => 'application/json']
+            ),
             'result' => false
         ];
 
@@ -39,7 +43,7 @@ class ResponseNoExceptionTest extends TestCase
         ];
 
         yield 'Response has no exception.' => [
-            'object' => new Response('<xml></xml>'),
+            'object' => new Response('<xml></xml>', 200, ['content-type' => 'application/xml']),
             'result' => true
         ];
     }
@@ -56,7 +60,7 @@ class ResponseNoExceptionTest extends TestCase
         $constraint = new ResponseNoException();
 
         $this->expectException(AssertionFailedError::class);
-        $this->expectExceptionMessage('Could not extract valid JSON or XML from response');
+        $this->expectExceptionMessage('Response does not contain a valid content-type header.');
 
         $constraint->evaluate($response);
     }
@@ -69,7 +73,9 @@ class ResponseNoExceptionTest extends TestCase
     public function testEvaluateWhenResponseContainsExceptions(): void
     {
         $response = new Response(
-            '{"code": "1", "sub_code": "2", "message": "Exception thrown.", "violations": {"key": "missing"}}'
+            '{"code": "1", "sub_code": "2", "message": "Exception thrown.", "violations": {"key": "missing"}}',
+            400,
+            ['content-type' => 'application/json']
         );
         $constraint = new ResponseNoException();
 

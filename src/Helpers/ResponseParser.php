@@ -6,7 +6,7 @@ namespace Eonx\TestUtils\Helpers;
 use Eonx\TestUtils\DataTransferObjects\ResponseException;
 use Eonx\TestUtils\Helpers\Exceptions\NoValidResponseException;
 use Eonx\TestUtils\Helpers\Interfaces\ResponseParserInterface;
-use PHPUnit\Framework\Constraint\IsJson;
+use JsonException;
 use Symfony\Component\HttpFoundation\Response;
 
 class ResponseParser implements ResponseParserInterface
@@ -23,14 +23,38 @@ class ResponseParser implements ResponseParserInterface
             return null;
         }
 
-        $constraint = new IsJson();
-        $isJson = $constraint->evaluate($content, '', true);
+        $contentType = $response->headers->get('content-type');
 
-        if ($isJson === false) {
+        if ($contentType === 'application/json') {
+            return $this->parseFromJson($content);
+        }
+
+        if ($contentType === 'application/xml') {
             return $this->parseFromXml($content);
         }
 
-        $contents = \json_decode($content, true, 512, \JSON_THROW_ON_ERROR);
+        throw new NoValidResponseException(
+            'Response does not contain a valid content-type header.'
+        );
+    }
+
+    /**
+     * Parse json and get response exception.
+     *
+     * @param string $input
+     *
+     * @return \Eonx\TestUtils\DataTransferObjects\ResponseException|null
+     */
+    public function parseFromJson(string $input): ?ResponseException
+    {
+        try {
+            $contents = \json_decode($input, true, 512, \JSON_THROW_ON_ERROR);
+        } catch (JsonException $exception) {
+            throw new NoValidResponseException(
+                \sprintf('Could not extract valid JSON from response: %s. Failed with: %s', $input,
+                    $exception->getMessage())
+            );
+        }
 
         return $this->prepareResponseException($contents);
     }
@@ -51,7 +75,7 @@ class ResponseParser implements ResponseParserInterface
 
         if ($xmlNode === false) {
             throw new NoValidResponseException(
-                \sprintf('Could not extract valid JSON or XML from response: %s', $input)
+                \sprintf('Could not extract valid XML from response: %s', $input)
             );
         }
 

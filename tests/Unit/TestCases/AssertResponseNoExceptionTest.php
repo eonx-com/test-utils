@@ -20,7 +20,9 @@ class AssertResponseNoExceptionTest extends UnitTestCase
     public function testResponseWithException(): void
     {
         $response = new Response(
-            '{"code": "1", "sub_code": "2", "message": "Exception thrown."}'
+            '{"code": "1", "sub_code": "2", "message": "Exception thrown."}',
+            400,
+            ['content-type' => 'application/json']
         );
 
         $this->expectException(AssertionFailedError::class);
@@ -36,7 +38,11 @@ class AssertResponseNoExceptionTest extends UnitTestCase
      */
     public function testResponseWithNoException(): void
     {
-        $response = new Response('{}');
+        $response = new Response(
+            '{}',
+            200,
+            ['content-type' => 'application/json']
+        );
 
         self::assertResponseNoException($response);
     }
