@@ -51,8 +51,11 @@ class ResponseParser implements ResponseParserInterface
             $contents = \json_decode($input, true, 512, \JSON_THROW_ON_ERROR);
         } catch (JsonException $exception) {
             throw new NoValidResponseException(
-                \sprintf('Could not extract valid JSON from response: %s. Failed with: %s', $input,
-                    $exception->getMessage())
+                \sprintf(
+                    'Could not extract valid JSON from response: %s. Failed with: %s',
+                    $input,
+                    $exception->getMessage()
+                )
             );
         }
 
