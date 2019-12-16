@@ -12,7 +12,9 @@
     "phpunit/phpunit": "^8.4"
   },
   "require-dev": {
+    "doctrine/orm": "^2.7",
     "eonx-com/apiformats": "^1.0",
+    "eonx-com/requesthandlers": "^1.2",
     "eonx-com/search": "^2.0",
     "eonx-com/standards": "^0.2.2",
     "phpmd/phpmd": "^2.7",
@@ -22,8 +24,7 @@
     "sebastian/phpcpd": "^4.1",
     "squizlabs/php_codesniffer": "^3.5",
     "symfony/http-foundation": "^4.2",
-    "symfony/validator": "4.3.4",
-    "doctrine/orm": "^2.7"
+    "symfony/validator": "4.3.4"
   },
   "autoload": {
     "psr-4": {

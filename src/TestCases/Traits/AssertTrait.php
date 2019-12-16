@@ -7,10 +7,12 @@ use EoneoPay\ApiFormats\Bridge\Laravel\Responses\NoContentApiResponse;
 use Eonx\TestUtils\Constraints\ArraySame;
 use Eonx\TestUtils\Constraints\ArraySameWithDates;
 use Eonx\TestUtils\Constraints\JsonSameAsArray;
+use Eonx\TestUtils\Constraints\RequestProperties;
 use Eonx\TestUtils\Constraints\ResponseNoException;
 use Eonx\TestUtils\Constraints\SymfonyConstraintViolation;
 use Eonx\TestUtils\Helpers\Interfaces\ClientStubInterface;
 use Eonx\TestUtils\Helpers\SearchClientStub;
+use LoyaltyCorp\RequestHandlers\Request\RequestObjectInterface;
 use PHPUnit\Framework\Constraint\Constraint;
 use PHPUnit\Framework\Constraint\IsIdentical;
 use Symfony\Component\HttpFoundation\Response;
@@ -145,6 +147,25 @@ trait AssertTrait
         $constraint = new JsonSameAsArray($expected);
 
         static::assertThat($actual, $constraint, $message);
+    }
+
+    /**
+     * Asserts that the request object has the expected properties.
+     *
+     * @param mixed[] $expected
+     * @param \LoyaltyCorp\RequestHandlers\Request\RequestObjectInterface $instance
+     * @param string $message
+     *
+     * @return void
+     */
+    public static function assertRequestProperties(
+        array $expected,
+        RequestObjectInterface $instance,
+        string $message = ''
+    ): void {
+        $constraint = new RequestProperties($expected);
+
+        static::assertThat($instance, $constraint, $message);
     }
 
     /**
