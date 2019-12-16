@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Tests\Eonx\TestUtils\Stubs\Vendor\Doctrine;
 
-
 use Doctrine\ORM\Configuration;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\ClassMetadataFactory;
@@ -11,6 +10,9 @@ use Doctrine\ORM\Query\ResultSetMapping;
 
 /**
  * @coversNothing
+ *
+ * @SuppressWarnings(PHPMD.TooManyMethods) This class is implemented from a Doctrine interface
+ * @SuppressWarnings(PHPMD.TooManyPublicMethods) This class is implemented from a Doctrine interface
  */
 class EntityManagerStub implements EntityManagerInterface
 {
@@ -52,7 +54,7 @@ class EntityManagerStub implements EntityManagerInterface
     /**
      * {@inheritdoc}
      */
-    public function copy($entity, $deep = false)
+    public function copy($entity, $deep = null)
     {
     }
 
@@ -100,6 +102,8 @@ class EntityManagerStub implements EntityManagerInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @SuppressWarnings(PHPMD.ShortVariable) Parameter is inherited from interface
      */
     public function find($className, $id)
     {
@@ -193,6 +197,8 @@ class EntityManagerStub implements EntityManagerInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @SuppressWarnings(PHPMD.ShortVariable) Parameter is inherited from interface
      */
     public function getReference($entityName, $id)
     {

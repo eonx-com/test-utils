@@ -23,12 +23,8 @@ class AssertDocumentIdsUpdatedTest extends UnitTestCase
         $clientStub = new SearchClientStub();
         $clientStub->bulkUpdate(
             [
-                new DocumentUpdate(
-                    'transaction', 'trans_id_1', ['key' => 'value']
-                ),
-                new DocumentUpdate(
-                    'transaction', 'trans_id_2', ['key' => 'value']
-                )
+                new DocumentUpdate('transaction', 'trans_id_1', ['key' => 'value']),
+                new DocumentUpdate('transaction', 'trans_id_2', ['key' => 'value'])
             ]
         );
 
@@ -52,12 +48,8 @@ class AssertDocumentIdsUpdatedTest extends UnitTestCase
         $clientStub = new SearchClientStub();
         $clientStub->bulkUpdate(
             [
-                new DocumentUpdate(
-                    'transaction', 'trans_id_1', ['key' => 'value']
-                ),
-                new DocumentUpdate(
-                    'transaction', 'trans_id_2', ['key' => 'value']
-                )
+                new DocumentUpdate('transaction', 'trans_id_1', ['key' => 'value']),
+                new DocumentUpdate('transaction', 'trans_id_2', ['key' => 'value'])
             ]
         );
 

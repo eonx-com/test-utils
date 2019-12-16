@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Tests\Eonx\TestUtils\Unit\Helpers;
 
 use Eonx\TestUtils\Helpers\SearchClientStub;
-use LoyaltyCorp\Search\DataTransferObjects\ClusterHealth;
 use LoyaltyCorp\Search\DataTransferObjects\DocumentUpdate;
 use PHPUnit\Framework\TestCase;
 
@@ -62,7 +61,6 @@ class SearchClientStubTest extends TestCase
             ]
         ], $client->getCreatedIndices());
         self::assertSame(['subscription_123'], $client->getCreatedAliases());
-
     }
 
     /**
@@ -124,7 +122,9 @@ class SearchClientStubTest extends TestCase
         );
         $client->bulkUpdate([
             new DocumentUpdate(
-                'transaction', 'trans_id_1', ['key' => 'value']
+                'transaction',
+                'trans_id_1',
+                ['key' => 'value']
             )
         ]);
         $client->deleteIndex('transaction');
@@ -139,7 +139,6 @@ class SearchClientStubTest extends TestCase
         self::assertSame([], $client->getSwappedAliases());
         self::assertSame([], $client->getDeletedIndices());
         self::assertSame([], $client->getDeletedAliases());
-
     }
 
     /**
@@ -152,7 +151,9 @@ class SearchClientStubTest extends TestCase
         $client = new SearchClientStub();
 
         $update = new DocumentUpdate(
-            'transaction', 'trans_id_1', ['key' => 'value']
+            'transaction',
+            'trans_id_1',
+            ['key' => 'value']
         );
         $client->bulkUpdate([$update]);
 

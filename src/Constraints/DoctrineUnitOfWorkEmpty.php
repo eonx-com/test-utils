@@ -12,6 +12,8 @@ class DoctrineUnitOfWorkEmpty extends Constraint
 {
     /**
      * {@inheritdoc}
+     *
+     * @SuppressWarnings(PHPMD.BooleanArgumentFlag) Designed by base phpunit constraint.
      */
     public function evaluate($other, string $description = '', bool $returnResult = false)
     {

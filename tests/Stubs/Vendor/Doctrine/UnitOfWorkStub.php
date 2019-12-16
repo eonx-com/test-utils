@@ -48,8 +48,8 @@ class UnitOfWorkStub extends UnitOfWork
     /**
      * UnitOfWorkStub constructor.
      *
-     * @param array $collectionDeletions
-     * @param array $collectionUpdates
+     * @param mixed[] $collectionDeletions
+     * @param mixed[] $collectionUpdates
      * @param mixed[] $entityDeletions
      * @param mixed[] $entityInsertions
      * @param mixed[] $entityUpdates

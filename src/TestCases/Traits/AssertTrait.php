@@ -82,9 +82,7 @@ trait AssertTrait
      */
     public static function assertDocumentIdsUpdated(array $expectedValues, ?ClientStubInterface $client = null): void
     {
-        if ($client === null) {
-            $client = new SearchClientStub();
-        }
+        $client = $client ?? new SearchClientStub();
 
         $updates = \array_merge(...$client->getUpdatedIndices());
 
