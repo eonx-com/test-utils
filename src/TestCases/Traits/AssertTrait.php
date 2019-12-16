@@ -9,6 +9,7 @@ use Eonx\TestUtils\Constraints\ArraySameWithDates;
 use Eonx\TestUtils\Constraints\JsonSameAsArray;
 use Eonx\TestUtils\Constraints\ResponseNoException;
 use Eonx\TestUtils\Constraints\SymfonyConstraintViolation;
+use LoyaltyCorp\Search\Interfaces\ClientInterface;
 use PHPUnit\Framework\Constraint\Constraint;
 use PHPUnit\Framework\Constraint\IsIdentical;
 use Symfony\Component\HttpFoundation\Response;
@@ -64,6 +65,32 @@ trait AssertTrait
         $constraint = new SymfonyConstraintViolation($expected);
 
         static::assertThat($violationList, $constraint);
+    }
+
+    /**
+     * Ensures that the search system received the expected document ids for update.
+     *
+     * phpcs:disable
+     *
+     * @param array<string, array<string>> $expectedValues
+     * @param \LoyaltyCorp\Search\Interfaces\ClientInterface $client
+     *
+     * @return void
+     *
+     * phpcs:enable
+     */
+    public static function assertDocumentIdsUpdated(array $expectedValues, ClientInterface $client): void
+    {
+        $updates = \array_merge(...$client->getUpdatedIndices());
+
+        $documents = [];
+        foreach ($updates as $update) {
+            $documents[$update->getIndex()][] = $update->getDocumentId();
+        }
+
+        $constraint = new ArraySame($expectedValues);
+
+        static::assertThat($documents, $constraint);
     }
 
     /**
