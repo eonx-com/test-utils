@@ -9,7 +9,7 @@ use Eonx\TestUtils\Helpers\Interfaces\ResponseParserInterface;
 use JsonException;
 use Symfony\Component\HttpFoundation\Response;
 
-class ResponseParser implements ResponseParserInterface
+final class ResponseParser implements ResponseParserInterface
 {
     /**
      * {@inheritdoc}
