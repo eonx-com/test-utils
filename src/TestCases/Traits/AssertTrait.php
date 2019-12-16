@@ -9,7 +9,8 @@ use Eonx\TestUtils\Constraints\ArraySameWithDates;
 use Eonx\TestUtils\Constraints\JsonSameAsArray;
 use Eonx\TestUtils\Constraints\ResponseNoException;
 use Eonx\TestUtils\Constraints\SymfonyConstraintViolation;
-use LoyaltyCorp\Search\Interfaces\ClientInterface;
+use Eonx\TestUtils\Helpers\Interfaces\ClientStubInterface;
+use Eonx\TestUtils\Helpers\SearchClientStub;
 use PHPUnit\Framework\Constraint\Constraint;
 use PHPUnit\Framework\Constraint\IsIdentical;
 use Symfony\Component\HttpFoundation\Response;
@@ -73,14 +74,18 @@ trait AssertTrait
      * phpcs:disable
      *
      * @param array<string, array<string>> $expectedValues
-     * @param \LoyaltyCorp\Search\Interfaces\ClientInterface $client
+     * @param \Eonx\TestUtils\Helpers\Interfaces\ClientStubInterface|null $client
      *
      * @return void
      *
      * phpcs:enable
      */
-    public static function assertDocumentIdsUpdated(array $expectedValues, ClientInterface $client): void
+    public static function assertDocumentIdsUpdated(array $expectedValues, ?ClientStubInterface $client = null): void
     {
+        if ($client === null) {
+            $client = new SearchClientStub();
+        }
+
         $updates = \array_merge(...$client->getUpdatedIndices());
 
         $documents = [];
