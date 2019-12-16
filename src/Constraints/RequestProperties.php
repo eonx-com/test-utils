@@ -37,6 +37,8 @@ class RequestProperties extends Constraint
 
     /**
      * {@inheritdoc}
+     *
+     * @SuppressWarnings(PHPMD.BooleanArgumentFlag) Designed by base phpunit constraint.
      */
     public function evaluate($other, string $description = '', bool $returnResult = false)
     {
@@ -58,7 +60,7 @@ class RequestProperties extends Constraint
             return $isSame === true;
         }
 
-        if($isSame === false){
+        if ($isSame === false) {
             // Create a comparision to be able to visually expected vs actual.
             $comparison = new ComparisonFailure(
                 $this->expected,
@@ -92,5 +94,4 @@ class RequestProperties extends Constraint
 
         return 'request object matches expected array';
     }
-
 }

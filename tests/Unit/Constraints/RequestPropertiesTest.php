@@ -7,6 +7,7 @@ use Eonx\TestUtils\Constraints\RequestProperties;
 use PHPUnit\Framework\AssertionFailedError;
 use PHPUnit\Framework\ExpectationFailedException;
 use PHPUnit\Framework\TestCase;
+use stdClass;
 use Tests\Eonx\TestUtils\Stubs\Helpers\RequestObjects\TestRequestStub;
 
 /**
@@ -32,7 +33,7 @@ class RequestPropertiesTest extends TestCase
         ];
 
         yield 'When request object is not a valid instance.' => [
-            'object' => new \stdClass(),
+            'object' => new stdClass(),
             'expected' => [],
             'exception' => new AssertionFailedError(
                 'Failed asserting that supplied object is a valid request object.'
@@ -54,7 +55,9 @@ class RequestPropertiesTest extends TestCase
      * @param mixed $object
      * @param mixed[] $expected
      * @param \PHPUnit\Framework\AssertionFailedError|null $exception
-     * @param bool|null $diffGenerated
+     * @param bool $diffGenerated
+     *
+     * @return void
      *
      * @dataProvider generateTestCases
      */

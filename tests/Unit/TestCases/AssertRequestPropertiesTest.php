@@ -42,6 +42,8 @@ class AssertRequestPropertiesTest extends UnitTestCase
      * @param mixed[] $expected
      * @param \PHPUnit\Framework\AssertionFailedError|null $exception
      *
+     * @return void
+     *
      * @dataProvider generateTestCases
      */
     public function testAssertion(

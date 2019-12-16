@@ -39,7 +39,7 @@ class ResponseNoException extends Constraint
         $instanceConstraint = new IsInstanceOf(Response::class);
         $isValidInstance = $instanceConstraint->evaluate($other, $description, $returnResult);
 
-        if ($isValidInstance === false && $returnResult === true) {
+        if ($returnResult === true && $isValidInstance === false) {
             return false;
         }
 
