@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Eonx\TestUtils\TestCases\Traits;
 
 use EoneoPay\ApiFormats\Bridge\Laravel\Responses\NoContentApiResponse;
+use Eonx\TestUtils\Constraints\ArraySame;
 use Eonx\TestUtils\Constraints\ArraySameWithDates;
 use Eonx\TestUtils\Constraints\JsonSameAsArray;
 use Eonx\TestUtils\Constraints\ResponseNoException;
@@ -18,6 +19,22 @@ use Symfony\Component\Validator\ConstraintViolationListInterface;
  */
 trait AssertTrait
 {
+    /**
+     * Assert an array is the same with allowable fuzzy keys.
+     *
+     * @param mixed[] $expected The array to compare with array $actual
+     * @param mixed[] $actual The array to compare with array $expected
+     * @param string $message
+     *
+     * @return void
+     */
+    public static function assertArrayFuzzy(array $expected, array $actual, string $message = ''): void
+    {
+        $constraint = new ArraySame($expected);
+
+        static::assertThat($actual, $constraint, $message);
+    }
+
     /**
      * Assert that two arrays provided are same with flat dates.
      *
