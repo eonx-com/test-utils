@@ -66,7 +66,7 @@ class RequestPropertiesTest extends TestCase
     ): void {
         $constraint = new RequestProperties($expected);
 
-        if ($exception instanceof AssertionFailedError === true) {
+        if ($exception !== null) {
             $this->expectException(AssertionFailedError::class);
             $this->expectExceptionMessage($exception->getMessage());
         }

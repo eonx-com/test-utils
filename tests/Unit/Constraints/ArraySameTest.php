@@ -72,16 +72,31 @@ class ArraySameTest extends TestCase
     ): void {
         $constraint = new ArraySame($expected);
 
-        if ($error instanceof AssertionFailedError === true) {
-            $this->expectException(
-                $comparisionCreated ?
-                    ExpectationFailedException::class :
-                    AssertionFailedError::class
-            );
+        if ($error !== null) {
+            $this->expectException(AssertionFailedError::class);
             $this->expectExceptionMessage($error->getMessage());
         }
 
-        $constraint->evaluate($actual);
+        try {
+            $constraint->evaluate($actual);
+        } catch (ExpectationFailedException $exception) {
+            if ($comparisionCreated === true) {
+                self::assertNotNull(
+                    $exception->getComparisonFailure(),
+                    'A difference was not generated for this test.'
+                );
+            }
+
+            if ($comparisionCreated === false) {
+                self::assertNull(
+                    $exception->getComparisonFailure(),
+                    'A difference was generated for this test.'
+                );
+            }
+
+            // rethrow error.
+            throw $exception;
+        }
 
         $this->addToAssertionCount(1);
     }

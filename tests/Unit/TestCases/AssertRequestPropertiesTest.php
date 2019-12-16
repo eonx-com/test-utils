@@ -49,7 +49,7 @@ class AssertRequestPropertiesTest extends UnitTestCase
         array $expected,
         ?AssertionFailedError $exception
     ): void {
-        if ($exception instanceof AssertionFailedError === true) {
+        if ($exception !== null) {
             $this->expectException(AssertionFailedError::class);
             $this->expectExceptionMessage($exception->getMessage());
         }

@@ -5,7 +5,6 @@ namespace Tests\Eonx\TestUtils\Unit\TestCases;
 
 use Eonx\TestUtils\TestCases\UnitTestCase;
 use PHPUnit\Framework\AssertionFailedError;
-use PHPUnit\Framework\ExpectationFailedException;
 
 /**
  * @covers \Eonx\TestUtils\TestCases\UnitTestCase::assertArrayFuzzy
@@ -25,8 +24,7 @@ class AssertArraySameTest extends UnitTestCase
             'expected' => ['key' => 'missing'],
             'exception' => new AssertionFailedError(
                 'Failed asserting that two arrays are identical.'
-            ),
-            'comparisionCreated' => true
+            )
         ];
 
         yield 'Test array same with fuzzy' =>
@@ -49,7 +47,6 @@ class AssertArraySameTest extends UnitTestCase
      * @param mixed $actual
      * @param mixed[] $expected
      * @param \PHPUnit\Framework\AssertionFailedError|null $error
-     * @param bool|null $comparisionCreated To assert that a comparision diff was created.
      *
      * @return void
      *
@@ -58,15 +55,10 @@ class AssertArraySameTest extends UnitTestCase
     public function testAssertion(
         $actual,
         array $expected,
-        ?AssertionFailedError $error,
-        ?bool $comparisionCreated = null
+        ?AssertionFailedError $error
     ): void {
-        if ($error instanceof AssertionFailedError === true) {
-            $this->expectException(
-                $comparisionCreated ?
-                    ExpectationFailedException::class :
-                    AssertionFailedError::class
-            );
+        if ($error !== null) {
+            $this->expectException(AssertionFailedError::class);
             $this->expectExceptionMessage($error->getMessage());
         }
 
