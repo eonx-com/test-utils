@@ -47,7 +47,8 @@ class ArraySameTest extends TestCase
         [
             'actual' => '',
             'expected' => ['key' => 'value'],
-            'exception' => new AssertionFailedError('Failed asserting that string is an array.')
+            'exception' => new AssertionFailedError('Failed asserting that string is an array.'),
+            'comparisionCreated' => false
         ];
     }
 
@@ -55,9 +56,9 @@ class ArraySameTest extends TestCase
      * Test evaluating array same constraint.
      *
      * @param mixed $actual
-     * @param array $expected
+     * @param mixed[] $expected
      * @param \PHPUnit\Framework\AssertionFailedError|null $error
-     * @param bool|null $comparisionCreated
+     * @param bool|null $comparisionCreated Assert if an comparision diff was generated.
      *
      * @return void
      *

@@ -47,7 +47,7 @@ class AssertArraySameTest extends UnitTestCase
      * Test evaluating array same constraint.
      *
      * @param mixed $actual
-     * @param array $expected
+     * @param mixed[] $expected
      * @param \PHPUnit\Framework\AssertionFailedError|null $error
      * @param bool|null $comparisionCreated To assert that a comparision diff was created.
      *
