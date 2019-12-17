@@ -78,16 +78,14 @@ trait AssertTrait
      * phpcs:disable
      *
      * @param array<string, array<string>> $expectedValues
-     * @param \Eonx\TestUtils\Helpers\Interfaces\ClientStubInterface|null $client
+     * @param \Eonx\TestUtils\Helpers\Interfaces\ClientStubInterface $client
      *
      * @return void
      *
      * phpcs:enable
      */
-    public static function assertDocumentIdsUpdated(array $expectedValues, ?ClientStubInterface $client = null): void
+    public static function assertDocumentIdsUpdated(array $expectedValues, ClientStubInterface $client): void
     {
-        $client = $client ?? new SearchClientStub();
-
         $updates = \array_merge(...$client->getUpdatedIndices());
 
         $documents = [];
