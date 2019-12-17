@@ -13,7 +13,6 @@ use Eonx\TestUtils\Constraints\RequestProperties;
 use Eonx\TestUtils\Constraints\ResponseNoException;
 use Eonx\TestUtils\Constraints\SymfonyConstraintViolation;
 use Eonx\TestUtils\Helpers\Interfaces\ClientStubInterface;
-use Eonx\TestUtils\Helpers\SearchClientStub;
 use LoyaltyCorp\RequestHandlers\Request\RequestObjectInterface;
 use PHPUnit\Framework\Constraint\Constraint;
 use PHPUnit\Framework\Constraint\IsIdentical;

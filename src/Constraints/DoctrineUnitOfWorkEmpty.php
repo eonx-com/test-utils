@@ -19,7 +19,7 @@ class DoctrineUnitOfWorkEmpty extends Constraint
     public function evaluate($other, string $description = '', bool $returnResult = false)
     {
         $unitOfWork = $other;
-        if($other instanceof EntityManagerInterface === true){
+        if ($other instanceof EntityManagerInterface === true) {
             /**
              * @var \Doctrine\ORM\EntityManagerInterface $other
              */

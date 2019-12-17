@@ -29,7 +29,7 @@ class AssertUnitOfWorkEmptyTest extends UnitTestCase
 
         try {
             self::assertUnitOfWorkIsEmpty($entityManager);
-        }catch (ExpectationFailedException $exception){
+        } catch (ExpectationFailedException $exception) {
             self::assertNotNull(
                 $exception->getComparisonFailure(),
                 'A difference comparision should have been generated.'

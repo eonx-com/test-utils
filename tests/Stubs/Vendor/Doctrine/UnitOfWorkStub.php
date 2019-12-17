@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Tests\Eonx\TestUtils\Stubs\Vendor\Doctrine;
 
-use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\UnitOfWork;
 
 /**
