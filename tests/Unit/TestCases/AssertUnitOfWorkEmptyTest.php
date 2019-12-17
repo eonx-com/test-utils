@@ -6,6 +6,7 @@ namespace Tests\Eonx\TestUtils\Unit\TestCases;
 use Eonx\TestUtils\TestCases\UnitTestCase;
 use PHPUnit\Framework\ExpectationFailedException;
 use stdClass;
+use Tests\Eonx\TestUtils\Stubs\Vendor\Doctrine\EntityManagerStub;
 use Tests\Eonx\TestUtils\Stubs\Vendor\Doctrine\UnitOfWorkStub;
 
 /**
@@ -21,12 +22,13 @@ class AssertUnitOfWorkEmptyTest extends UnitTestCase
     public function testAssertionFails(): void
     {
         $unitOfWork = new UnitOfWorkStub([new stdClass()]);
+        $entityManager = new EntityManagerStub($unitOfWork);
 
         $this->expectException(ExpectationFailedException::class);
         $this->expectExceptionMessage('Failed asserting that unit of work has no pending changes.');
 
         try {
-            self::assertUnitOfWorkIsEmpty($unitOfWork);
+            self::assertUnitOfWorkIsEmpty($entityManager);
         }catch (ExpectationFailedException $exception){
             self::assertNotNull(
                 $exception->getComparisonFailure(),
@@ -45,8 +47,8 @@ class AssertUnitOfWorkEmptyTest extends UnitTestCase
     public function testAssertionPasses(): void
     {
         // empty constructor means no pending changes
-        $unitOfWork = new UnitOfWorkStub();
+        $entityManager = new EntityManagerStub();
 
-        self::assertUnitOfWorkIsEmpty($unitOfWork);
+        self::assertUnitOfWorkIsEmpty($entityManager);
     }
 }

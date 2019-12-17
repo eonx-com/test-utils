@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Eonx\TestUtils\Constraints;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\UnitOfWork;
 use PHPUnit\Framework\AssertionFailedError;
 use PHPUnit\Framework\Constraint\Constraint;
@@ -17,23 +18,31 @@ class DoctrineUnitOfWorkEmpty extends Constraint
      */
     public function evaluate($other, string $description = '', bool $returnResult = false)
     {
-        if ($other instanceof UnitOfWork === false) {
+        $unitOfWork = $other;
+        if($other instanceof EntityManagerInterface === true){
+            /**
+             * @var \Doctrine\ORM\EntityManagerInterface $other
+             */
+            $unitOfWork = $other->getUnitOfWork();
+        }
+
+        if ($unitOfWork instanceof UnitOfWork === false) {
             throw new AssertionFailedError(
                 'Supplied object is not a valid UnitOfWork instance.'
             );
         }
 
         /**
-         * @var \Doctrine\ORM\UnitOfWork $other
+         * @var \Doctrine\ORM\UnitOfWork $unitOfWork
          *
          * @see https://youtrack.jetbrains.com/issue/WI-37859 - typehint required until PhpStorm recognises === check
          */
         $pendingChanges = [
-            'scheduled collection deletions' => $other->getScheduledCollectionDeletions(),
-            'scheduled collection updates' => $other->getScheduledCollectionUpdates(),
-            'scheduled entity deletions' => $other->getScheduledEntityDeletions(),
-            'scheduled entity insertions' => $other->getScheduledEntityInsertions(),
-            'scheduled entity updates' => $other->getScheduledEntityUpdates()
+            'scheduled collection deletions' => $unitOfWork->getScheduledCollectionDeletions(),
+            'scheduled collection updates' => $unitOfWork->getScheduledCollectionUpdates(),
+            'scheduled entity deletions' => $unitOfWork->getScheduledEntityDeletions(),
+            'scheduled entity insertions' => $unitOfWork->getScheduledEntityInsertions(),
+            'scheduled entity updates' => $unitOfWork->getScheduledEntityUpdates()
         ];
 
         // Loop through the different scheduled types from unit of work so more context can be provided within failure
@@ -65,7 +74,7 @@ class DoctrineUnitOfWorkEmpty extends Constraint
                 $this->exporter()->export($pendingChanges),
             );
 
-            $this->fail($other, $description, $comparison);
+            $this->fail($unitOfWork, $description, $comparison);
         }
     }
 

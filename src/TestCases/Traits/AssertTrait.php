@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Eonx\TestUtils\TestCases\Traits;
 
-use Doctrine\ORM\UnitOfWork;
+use Doctrine\ORM\EntityManagerInterface;
 use EoneoPay\ApiFormats\Bridge\Laravel\Responses\NoContentApiResponse;
 use Eonx\TestUtils\Constraints\ArraySame;
 use Eonx\TestUtils\Constraints\ArraySameWithDates;
@@ -230,15 +230,15 @@ trait AssertTrait
     /**
      * Ensure the unit of work has no changes in limbo
      *
-     * @param \Doctrine\ORM\UnitOfWork $unitOfWork
+     * @param \Doctrine\ORM\EntityManagerInterface $entityManager
      *
      * @return void
      */
-    public static function assertUnitOfWorkIsEmpty(UnitOfWork $unitOfWork): void
+    public static function assertUnitOfWorkIsEmpty(EntityManagerInterface $entityManager): void
     {
         $constraint = new DoctrineUnitOfWorkEmpty();
 
-        static::assertThat($unitOfWork, $constraint);
+        static::assertThat($entityManager, $constraint);
     }
 
     /**

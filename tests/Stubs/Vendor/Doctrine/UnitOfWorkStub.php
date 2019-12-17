@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Tests\Eonx\TestUtils\Stubs\Vendor\Doctrine;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\UnitOfWork;
 
 /**
@@ -67,7 +68,7 @@ class UnitOfWorkStub extends UnitOfWork
         $this->entityInsertions = $entityInsertions;
         $this->entityUpdates = $entityUpdates;
 
-        parent::__construct(new EntityManagerStub());
+        parent::__construct(new EntityManagerStub($this));
     }
 
     /**

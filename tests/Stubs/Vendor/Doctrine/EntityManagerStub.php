@@ -7,6 +7,7 @@ use Doctrine\ORM\Configuration;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\ClassMetadataFactory;
 use Doctrine\ORM\Query\ResultSetMapping;
+use Doctrine\ORM\UnitOfWork;
 
 /**
  * @coversNothing
@@ -16,6 +17,21 @@ use Doctrine\ORM\Query\ResultSetMapping;
  */
 class EntityManagerStub implements EntityManagerInterface
 {
+    /**
+     * @var \Doctrine\ORM\UnitOfWork
+     */
+    private $unitOfWork;
+
+    /**
+     * EntityManagerStub constructor.
+     *
+     * @param \Doctrine\ORM\UnitOfWork|null $unitOfWork
+     */
+    public function __construct(?UnitOfWork $unitOfWork = null)
+    {
+        $this->unitOfWork = $unitOfWork ?? new UnitOfWorkStub();
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -216,6 +232,7 @@ class EntityManagerStub implements EntityManagerInterface
      */
     public function getUnitOfWork()
     {
+        return $this->unitOfWork;
     }
 
     /**

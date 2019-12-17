@@ -8,6 +8,7 @@ use PHPUnit\Framework\AssertionFailedError;
 use PHPUnit\Framework\ExpectationFailedException;
 use PHPUnit\Framework\TestCase;
 use stdClass;
+use Tests\Eonx\TestUtils\Stubs\Vendor\Doctrine\EntityManagerStub;
 use Tests\Eonx\TestUtils\Stubs\Vendor\Doctrine\UnitOfWorkStub;
 
 /**
@@ -43,13 +44,14 @@ class DoctrineUnitOfWorkEmptyTest extends TestCase
             [new stdClass()],
             [new stdClass()],
         );
+        $entityManager = new EntityManagerStub($unitOfWork);
 
         // Expected an exception which has comparision diff
         $this->expectException(ExpectationFailedException::class);
         $this->expectExceptionMessage('Failed asserting that unit of work has no pending changes');
 
         try {
-            $constraint->evaluate($unitOfWork);
+            $constraint->evaluate($entityManager);
         } catch (ExpectationFailedException $exception) {
             self::assertNotNull(
                 $exception->getComparisonFailure(),
