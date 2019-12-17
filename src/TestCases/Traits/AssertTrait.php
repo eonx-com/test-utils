@@ -3,9 +3,11 @@ declare(strict_types=1);
 
 namespace Eonx\TestUtils\TestCases\Traits;
 
+use Doctrine\ORM\UnitOfWork;
 use EoneoPay\ApiFormats\Bridge\Laravel\Responses\NoContentApiResponse;
 use Eonx\TestUtils\Constraints\ArraySame;
 use Eonx\TestUtils\Constraints\ArraySameWithDates;
+use Eonx\TestUtils\Constraints\DoctrineUnitOfWorkEmpty;
 use Eonx\TestUtils\Constraints\JsonSameAsArray;
 use Eonx\TestUtils\Constraints\RequestProperties;
 use Eonx\TestUtils\Constraints\ResponseNoException;
@@ -223,6 +225,20 @@ trait AssertTrait
         $constraint = new ResponseNoException();
 
         static::assertThat($response, $constraint);
+    }
+
+    /**
+     * Ensure the unit of work has no changes in limbo
+     *
+     * @param \Doctrine\ORM\UnitOfWork $unitOfWork
+     *
+     * @return void
+     */
+    public static function assertUnitOfWorkIsEmpty(UnitOfWork $unitOfWork): void
+    {
+        $constraint = new DoctrineUnitOfWorkEmpty();
+
+        static::assertThat($unitOfWork, $constraint);
     }
 
     /**
