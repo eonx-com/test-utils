@@ -48,7 +48,16 @@ class DoctrineUnitOfWorkEmptyTest extends TestCase
         $this->expectException(ExpectationFailedException::class);
         $this->expectExceptionMessage('Failed asserting that unit of work has no pending changes');
 
-        $constraint->evaluate($unitOfWork);
+        try {
+            $constraint->evaluate($unitOfWork);
+        } catch (ExpectationFailedException $exception) {
+            self::assertNotNull(
+                $exception->getComparisonFailure(),
+                'A difference was not generated for this test case.'
+            );
+
+            throw $exception;
+        }
     }
 
     /**
