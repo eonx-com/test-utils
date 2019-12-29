@@ -23,10 +23,13 @@ class SearchClientStubTest extends TestCase
             true,
             true,
             ['transaction', 'coupon'],
-            ['transaction_123', 'coupon_123']
+            [['name' => 'alias1', 'index' => 'index1'], ['name' => 'alias2', 'index' => 'index1']]
         );
 
-        self::assertSame(['transaction_123', 'coupon_123'], $client->getAliases());
+        self::assertSame(
+            [['name' => 'alias1', 'index' => 'index1'], ['name' => 'alias2', 'index' => 'index1']],
+            $client->getAliases()
+        );
         self::assertSame(['transaction', 'coupon'], $client->getIndices());
         self::assertTrue($client->isAlias('transaction_123'));
         self::assertTrue($client->isIndex('transaction'));

@@ -9,8 +9,10 @@ use Symfony\Component\Validator\ConstraintViolationListInterface;
 
 /**
  * @coversNothing
+ *
+ * @implements IteratorAggregate<\Symfony\Component\Validator\ConstraintViolationInterface>
  */
-class ConstraintViolationListStub implements IteratorAggregate, ConstraintViolationListInterface
+class ConstraintViolationListNoToStringStub implements IteratorAggregate, ConstraintViolationListInterface
 {
     /**
      * {@inheritdoc}

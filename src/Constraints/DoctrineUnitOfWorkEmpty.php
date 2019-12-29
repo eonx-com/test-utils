@@ -12,11 +12,19 @@ use SebastianBergmann\Comparator\ComparisonFailure;
 class DoctrineUnitOfWorkEmpty extends Constraint
 {
     /**
-     * {@inheritdoc}
+     * Evaluates the constraint.
+     *
+     * @param mixed $other
+     * @param string $description
+     * @param bool $returnResult
+     *
+     * @return bool|null
+     *
+     * @noinspection PhpMissingParentCallCommonInspection
      *
      * @SuppressWarnings(PHPMD.BooleanArgumentFlag) Designed by base phpunit constraint.
      */
-    public function evaluate($other, string $description = '', bool $returnResult = false)
+    public function evaluate($other, string $description = '', bool $returnResult = false): ?bool
     {
         $unitOfWork = $other;
         if ($other instanceof EntityManagerInterface === true) {
@@ -53,7 +61,7 @@ class DoctrineUnitOfWorkEmpty extends Constraint
                 continue;
             }
 
-            $pendingChanges[$work] = \array_map('get_class', $entities);
+            $pendingChanges[$work] = \array_map('\get_class', $entities);
         }
 
         // if return result is true, return based on if pending changes are empty.
@@ -76,6 +84,8 @@ class DoctrineUnitOfWorkEmpty extends Constraint
 
             $this->fail($unitOfWork, $description, $comparison);
         }
+
+        return true;
     }
 
     /**

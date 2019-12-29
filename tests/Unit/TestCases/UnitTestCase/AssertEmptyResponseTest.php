@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Tests\Eonx\TestUtils\Unit\TestCases;
+namespace Tests\Eonx\TestUtils\Unit\TestCases\UnitTestCase;
 
 use EoneoPay\ApiFormats\Bridge\Laravel\Responses\NoContentApiResponse;
 use Eonx\TestUtils\TestCases\UnitTestCase;

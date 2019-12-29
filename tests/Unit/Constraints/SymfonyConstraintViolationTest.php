@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 use stdClass;
 use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\ConstraintViolationList;
-use Tests\Eonx\TestUtils\Stubs\Vendor\Symfony\Validator\ConstraintViolationListStub;
+use Tests\Eonx\TestUtils\Stubs\Vendor\Symfony\Validator\ConstraintViolationListNoToStringStub;
 
 /**
  * @covers \Eonx\TestUtils\Constraints\SymfonyConstraintViolation
@@ -33,7 +33,7 @@ class SymfonyConstraintViolationTest extends TestCase
 
         yield 'Custom constraint validation list has __toString()' =>
         [
-            'list' => new ConstraintViolationListStub(),
+            'list' => new ConstraintViolationListNoToStringStub(),
             'expected' => '',
             'error' => new AssertionFailedError(
                 'No __toString() method is available on the violation list'

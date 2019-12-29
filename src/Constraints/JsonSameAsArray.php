@@ -34,11 +34,19 @@ class JsonSameAsArray extends Constraint
     }
 
     /**
-     * {@inheritdoc}
+     * Evaluates the constraint.
+     *
+     * @param mixed $other
+     * @param string $description
+     * @param bool $returnResult
+     *
+     * @return bool|null
+     *
+     * @noinspection PhpMissingParentCallCommonInspection
      *
      * @SuppressWarnings(PHPMD.BooleanArgumentFlag) Designed by base phpunit constraint.
      */
-    public function evaluate($other, string $description = '', bool $returnResult = false)
+    public function evaluate($other, string $description = '', bool $returnResult = false): ?bool
     {
         $isJson = new IsJson();
         $isJson->evaluate($other, $description, $returnResult);

@@ -9,7 +9,7 @@ use LoyaltyCorp\Search\DataTransferObjects\ClusterHealth;
 final class SearchClientStub implements ClientStubInterface
 {
     /**
-     * @var mixed[]
+     * @var string[][]
      */
     private $aliases;
 
@@ -180,6 +180,7 @@ final class SearchClientStub implements ClientStubInterface
      */
     public function getHealth(): ClusterHealth
     {
+        return new ClusterHealth([]);
     }
 
     /**

@@ -14,6 +14,10 @@ abstract class TestCase extends PHPUnitTestCase
      * Returns the base path of the project (the location where the phpunit.xml file
      * being used for the test run is located).
      *
+     * This method can be used by a test case to find the project path to do assertions
+     * against the project: for example, the CoversTest that ships with this package
+     * needs to know the project location to make assertions about the project.
+     *
      * @return string
      *
      * @SuppressWarnings(PHPMD.Superglobals) Required to interrogate phpunit's configuration
