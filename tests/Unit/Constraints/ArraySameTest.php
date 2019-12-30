@@ -4,14 +4,14 @@ declare(strict_types=1);
 namespace Tests\Eonx\TestUtils\Unit\Constraints;
 
 use Eonx\TestUtils\Constraints\ArraySame;
+use Eonx\TestUtils\TestCases\UnitTestCase;
 use PHPUnit\Framework\AssertionFailedError;
 use PHPUnit\Framework\ExpectationFailedException;
-use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Eonx\TestUtils\Constraints\ArraySame
  */
-class ArraySameTest extends TestCase
+class ArraySameTest extends UnitTestCase
 {
     /**
      * Test cases to test array same with fuzzy

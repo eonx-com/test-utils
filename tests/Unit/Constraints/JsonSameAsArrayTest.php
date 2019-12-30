@@ -4,13 +4,13 @@ declare(strict_types=1);
 namespace Tests\Eonx\TestUtils\Unit\Constraints;
 
 use Eonx\TestUtils\Constraints\JsonSameAsArray;
+use Eonx\TestUtils\TestCases\UnitTestCase;
 use PHPUnit\Framework\AssertionFailedError;
-use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Eonx\TestUtils\Constraints\JsonSameAsArray
  */
-class JsonSameAsArrayTest extends TestCase
+class JsonSameAsArrayTest extends UnitTestCase
 {
     /**
      * Test to make sure if arrays match, constraint passes.

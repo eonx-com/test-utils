@@ -6,13 +6,13 @@ namespace Tests\Eonx\TestUtils\Unit\Helpers;
 use Eonx\TestUtils\DataTransferObjects\ResponseException;
 use Eonx\TestUtils\Helpers\Exceptions\NoValidResponseException;
 use Eonx\TestUtils\Helpers\ResponseParser;
-use PHPUnit\Framework\TestCase;
+use Eonx\TestUtils\TestCases\UnitTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @covers \Eonx\TestUtils\Helpers\ResponseParser
  */
-class ResponseParserTest extends TestCase
+class ResponseParserTest extends UnitTestCase
 {
     /**
      * Generate cases to test parsing errors from response.

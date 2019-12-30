@@ -4,16 +4,16 @@ declare(strict_types=1);
 namespace Tests\Eonx\TestUtils\Unit\Constraints;
 
 use Eonx\TestUtils\Constraints\RequestProperties;
+use Eonx\TestUtils\TestCases\UnitTestCase;
 use PHPUnit\Framework\AssertionFailedError;
 use PHPUnit\Framework\ExpectationFailedException;
-use PHPUnit\Framework\TestCase;
 use stdClass;
 use Tests\Eonx\TestUtils\Stubs\Helpers\RequestObjects\TestRequestStub;
 
 /**
  * @covers \Eonx\TestUtils\Constraints\RequestProperties
  */
-class RequestPropertiesTest extends TestCase
+class RequestPropertiesTest extends UnitTestCase
 {
     /**
      * Generate test cases to test constraint.

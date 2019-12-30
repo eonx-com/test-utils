@@ -4,8 +4,8 @@ declare(strict_types=1);
 namespace Tests\Eonx\TestUtils\Unit\Constraints;
 
 use Eonx\TestUtils\Constraints\SymfonyConstraintViolation;
+use Eonx\TestUtils\TestCases\UnitTestCase;
 use PHPUnit\Framework\AssertionFailedError;
-use PHPUnit\Framework\TestCase;
 use stdClass;
 use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\ConstraintViolationList;
@@ -14,7 +14,7 @@ use Tests\Eonx\TestUtils\Stubs\Vendor\Symfony\Validator\ConstraintViolationListN
 /**
  * @covers \Eonx\TestUtils\Constraints\SymfonyConstraintViolation
  */
-class SymfonyConstraintViolationTest extends TestCase
+class SymfonyConstraintViolationTest extends UnitTestCase
 {
     /**
      * Create test cases to test for evaluate.

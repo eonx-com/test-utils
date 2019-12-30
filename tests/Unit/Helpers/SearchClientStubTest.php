@@ -4,13 +4,13 @@ declare(strict_types=1);
 namespace Tests\Eonx\TestUtils\Unit\Helpers;
 
 use Eonx\TestUtils\Helpers\SearchClientStub;
+use Eonx\TestUtils\TestCases\UnitTestCase;
 use LoyaltyCorp\Search\DataTransferObjects\DocumentUpdate;
-use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Eonx\TestUtils\Helpers\SearchClientStub
  */
-class SearchClientStubTest extends TestCase
+class SearchClientStubTest extends UnitTestCase
 {
     /**
      * Test creating the stub.

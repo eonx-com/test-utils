@@ -3,13 +3,13 @@ declare(strict_types=1);
 
 namespace Tests\Eonx\TestUtils\Unit\Validation;
 
-use Eonx\TestUtils\TestCases\TestCase;
+use Eonx\TestUtils\TestCases\UnitTestCase;
 use Eonx\TestUtils\Validation\CodeCoverageValidator;
 
 /**
  * @covers \Eonx\TestUtils\Validation\CodeCoverageValidator
  */
-class CodeCoverageValidatorTest extends TestCase
+class CodeCoverageValidatorTest extends UnitTestCase
 {
     /**
      * Tests that the validator returns an array of files (as expected when run against src).

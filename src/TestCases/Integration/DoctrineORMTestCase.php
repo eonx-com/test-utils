@@ -91,8 +91,8 @@ class DoctrineORMTestCase extends TestCase
             }
 
             $this->entityManager->getConnection()->exec(self::$sql);
-        } catch (\Exception $exception) {
             // @codeCoverageIgnoreStart
+        } catch (\Exception $exception) {
             // Testing this exception/failure requires invalid entities to be present for the SchemaTool
             // to throw.
             self::fail(\sprintf('Exception thrown when creating database schema: %s', $exception->getMessage()));

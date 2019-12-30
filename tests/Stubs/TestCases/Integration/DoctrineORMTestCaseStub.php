@@ -6,6 +6,9 @@ namespace Tests\Eonx\TestUtils\Stubs\TestCases\Integration;
 use Doctrine\ORM\EntityManagerInterface;
 use Eonx\TestUtils\TestCases\Integration\DoctrineORMTestCase;
 
+/**
+ * @coversNothing
+ */
 class DoctrineORMTestCaseStub extends DoctrineORMTestCase
 {
     /**

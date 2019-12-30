@@ -4,15 +4,15 @@ declare(strict_types=1);
 namespace Tests\Eonx\TestUtils\Unit\Constraints;
 
 use Eonx\TestUtils\Constraints\ResponseNoException;
+use Eonx\TestUtils\TestCases\UnitTestCase;
 use PHPUnit\Framework\AssertionFailedError;
-use PHPUnit\Framework\TestCase;
 use stdClass;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @covers \Eonx\TestUtils\Constraints\ResponseNoException
  */
-class ResponseNoExceptionTest extends TestCase
+class ResponseNoExceptionTest extends UnitTestCase
 {
     /**
      * Generate test cases which would return a result from

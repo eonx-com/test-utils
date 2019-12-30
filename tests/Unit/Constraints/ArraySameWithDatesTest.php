@@ -5,13 +5,13 @@ namespace Tests\Eonx\TestUtils\Unit\Constraints;
 
 use DateTime;
 use Eonx\TestUtils\Constraints\ArraySameWithDates;
+use Eonx\TestUtils\TestCases\UnitTestCase;
 use PHPUnit\Framework\AssertionFailedError;
-use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Eonx\TestUtils\Constraints\ArraySameWithDates
  */
-class ArraySameWithDatesTest extends TestCase
+class ArraySameWithDatesTest extends UnitTestCase
 {
     /**
      * Test to make sure evaluate works as expected.

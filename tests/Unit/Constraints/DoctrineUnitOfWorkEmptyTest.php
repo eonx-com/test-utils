@@ -4,9 +4,9 @@ declare(strict_types=1);
 namespace Tests\Eonx\TestUtils\Unit\Constraints;
 
 use Eonx\TestUtils\Constraints\DoctrineUnitOfWorkEmpty;
+use Eonx\TestUtils\TestCases\UnitTestCase;
 use PHPUnit\Framework\AssertionFailedError;
 use PHPUnit\Framework\ExpectationFailedException;
-use PHPUnit\Framework\TestCase;
 use stdClass;
 use Tests\Eonx\TestUtils\Stubs\Vendor\Doctrine\EntityManagerStub;
 use Tests\Eonx\TestUtils\Stubs\Vendor\Doctrine\UnitOfWorkStub;
@@ -14,7 +14,7 @@ use Tests\Eonx\TestUtils\Stubs\Vendor\Doctrine\UnitOfWorkStub;
 /**
  * @covers \Eonx\TestUtils\Constraints\DoctrineUnitOfWorkEmpty
  */
-class DoctrineUnitOfWorkEmptyTest extends TestCase
+class DoctrineUnitOfWorkEmptyTest extends UnitTestCase
 {
     /**
      * Test fails when object is not a valid unit of work instance.
@@ -70,10 +70,24 @@ class DoctrineUnitOfWorkEmptyTest extends TestCase
     public function testPassingCase(): void
     {
         $constraint = new DoctrineUnitOfWorkEmpty();
-
         $unitOfWork = new UnitOfWorkStub();
 
         $result = $constraint->evaluate($unitOfWork, '', true);
+
+        self::assertTrue($result);
+    }
+
+    /**
+     * Test passing case without returned result.
+     *
+     * @return void
+     */
+    public function testPassingCaseNoReturn(): void
+    {
+        $constraint = new DoctrineUnitOfWorkEmpty();
+        $unitOfWork = new UnitOfWorkStub();
+
+        $result = $constraint->evaluate($unitOfWork, '', false);
 
         self::assertTrue($result);
     }

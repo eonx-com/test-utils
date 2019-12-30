@@ -177,6 +177,8 @@ final class SearchClientStub implements ClientStubInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @codeCoverageIgnore Until an implementation exists.
      */
     public function getHealth(): ClusterHealth
     {

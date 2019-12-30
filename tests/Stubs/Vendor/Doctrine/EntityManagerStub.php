@@ -12,6 +12,8 @@ use Doctrine\ORM\UnitOfWork;
 /**
  * @coversNothing
  *
+ * TODO: replace this EntityManagerStub with a stub implementation in the this package.
+ *
  * @SuppressWarnings(PHPMD.TooManyMethods) This class is implemented from a Doctrine interface
  * @SuppressWarnings(PHPMD.TooManyPublicMethods) This class is implemented from a Doctrine interface
  */

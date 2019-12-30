@@ -7,6 +7,9 @@ use LoyaltyCorp\RequestHandlers\Request\RequestObjectInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Tests\Eonx\TestUtils\Stubs\Helpers\RequestObjects\Exceptions\RequestValidationExceptionStub;
 
+/**
+ * @coversNothing
+ */
 class TestRequestStub implements RequestObjectInterface
 {
     /**

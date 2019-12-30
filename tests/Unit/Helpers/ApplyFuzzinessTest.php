@@ -4,12 +4,12 @@ declare(strict_types=1);
 namespace Tests\Eonx\TestUtils\Unit\Helpers;
 
 use Eonx\TestUtils\Helpers\ApplyFuzziness;
-use PHPUnit\Framework\TestCase;
+use Eonx\TestUtils\TestCases\UnitTestCase;
 
 /**
  * @covers \Eonx\TestUtils\Helpers\ApplyFuzziness
  */
-class ApplyFuzzinessTest extends TestCase
+class ApplyFuzzinessTest extends UnitTestCase
 {
     /**
      * Test fuzziness is applied to actual array.

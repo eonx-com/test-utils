@@ -4,12 +4,12 @@ declare(strict_types=1);
 namespace Tests\Eonx\TestUtils\Unit\DataTransferObjects;
 
 use Eonx\TestUtils\DataTransferObjects\ResponseException;
-use PHPUnit\Framework\TestCase;
+use Eonx\TestUtils\TestCases\UnitTestCase;
 
 /**
  * @covers \Eonx\TestUtils\DataTransferObjects\ResponseException
  */
-class ResponseExceptionTest extends TestCase
+class ResponseExceptionTest extends UnitTestCase
 {
     /**
      * Test dto constructor and getters.

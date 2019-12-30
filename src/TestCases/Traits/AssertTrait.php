@@ -237,16 +237,4 @@ trait AssertTrait
 
         static::assertThat($entityManager, $constraint);
     }
-
-    /**
-     * Base assertThat method to make sure trait user implements this.
-     * This method is same signature as phpunit's base Assert::assertThat.
-     *
-     * @param mixed $value
-     * @param \PHPUnit\Framework\Constraint\Constraint $constraint
-     * @param string $message
-     *
-     * @return void
-     */
-    abstract protected static function assertThat($value, Constraint $constraint, string $message = ''): void;
 }
