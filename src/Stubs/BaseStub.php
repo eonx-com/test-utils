@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Eonx\TestUtils\Stubs;
 
 use Eonx\TestUtils\Exceptions\Stubs\NoResponsesConfiguredException;
+use RuntimeException;
 use Throwable;
 
 /**
@@ -70,7 +71,7 @@ abstract class BaseStub
     protected function getCalls(string $method): array
     {
         if (\preg_match('/^get(.*)Calls$/', $method, $matches) !== 1) {
-            throw new \RuntimeException(\sprintf(
+            throw new RuntimeException(\sprintf(
                 'Get method "%s" doesn\'t match required format of getMethodCalls()',
                 $method
             ));

@@ -11,9 +11,6 @@ parameters:
             message: '#Method .* should return .* but return statement is missing\.#'
             path: tests/Stubs
         -
-            message: '#Method PHPUnit\\Framework\\Assert::assertThat\(\) has parameter \$value with no typehint specified\.#'
-            path: src/TestCases
-        -
             message: '#Method .* return type has no value type specified in iterable type .*\.#'
             path: tests/Stubs
         -
