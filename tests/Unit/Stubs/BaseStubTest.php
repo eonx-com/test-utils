@@ -6,7 +6,6 @@ namespace Tests\Eonx\TestUtils\Unit\Stubs;
 use Eonx\TestUtils\Exceptions\Stubs\NoResponsesConfiguredException;
 use Eonx\TestUtils\TestCases\UnitTestCase;
 use Exception;
-use RuntimeException;
 use Tests\Eonx\TestUtils\Stubs\Stubs\BaseStubStub;
 
 /**

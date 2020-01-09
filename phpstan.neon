@@ -5,12 +5,6 @@ includes:
 parameters:
     ignoreErrors:
         -
-            message: '#Method .* has no return typehint specified\.#'
-            path: tests/Stubs
-        -
-            message: '#Method .* should return .* but return statement is missing\.#'
-            path: tests/Stubs
-        -
             message: '#Method .* return type has no value type specified in iterable type .*\.#'
             path: tests/Stubs
         -

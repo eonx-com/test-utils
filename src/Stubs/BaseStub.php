@@ -98,6 +98,9 @@ abstract class BaseStub
      */
     protected function returnOrThrowResponse(string $method, $default = self::NOT_PROVIDED)
     {
+        // If we dont have a default value provided, and there are no responses defined
+        // for this method, we will throw. For no throw behaviour, this method must be
+        // provided with a default value.
         if (\array_key_exists($method, $this->responses) === false &&
             $default === self::NOT_PROVIDED) {
             throw new NoResponsesConfiguredException(\sprintf(
@@ -107,14 +110,19 @@ abstract class BaseStub
         }
 
         $response = $default;
+
+        // If we have the method defined in the responses array, shift a response
+        // from that array (or use the default if we've run out of responses.
         if (\array_key_exists($method, $this->responses) === true) {
             $response = \array_shift($this->responses[$method]) ?? $response;
         }
 
+        // If the response is throwable, we're going to throw it instead.
         if ($response instanceof Throwable === true) {
             throw $response;
         }
 
+        // If we got here, and the response is still NOT_PROVIDED we'll return a null.
         return $response === self::NOT_PROVIDED
             ? null
             : $response;
