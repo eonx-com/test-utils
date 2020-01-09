@@ -106,8 +106,10 @@ abstract class BaseStub
             ));
         }
 
-        $methodResponses = $this->responses[$method] ?? [];
-        $response = \array_shift($methodResponses) ?? $default;
+        $response = $default;
+        if (\array_key_exists($method, $this->responses) === true) {
+            $response = \array_shift($this->responses[$method]) ?? $response;
+        }
 
         if ($response instanceof Throwable === true) {
             throw $response;

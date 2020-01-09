@@ -17,7 +17,7 @@ class BaseStubStub extends BaseStub
      */
     public function getExampleCalls(): array
     {
-        return $this->getCalls(__FUNCTION__);
+        return $this->getCalls('example');
     }
 
     /**
@@ -27,7 +27,7 @@ class BaseStubStub extends BaseStub
      */
     public function getBadness(): array
     {
-        return $this->getCalls(__FUNCTION__);
+        return $this->getCalls('badness');
     }
 
     /**
@@ -46,6 +46,8 @@ class BaseStubStub extends BaseStub
      * @param string $arg
      *
      * @return string|null
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter) Not unused
      */
     public function example(string $arg): ?string
     {

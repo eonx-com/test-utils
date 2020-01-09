@@ -6,14 +6,11 @@ namespace Tests\Eonx\TestUtils\Unit\Stubs\Vendor\Doctrine\ORM;
 use Doctrine\Common\EventManager;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Driver\PDOSqlite\Driver;
-use Doctrine\ORM\Cache\DefaultCache;
 use Doctrine\ORM\Configuration;
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Internal\Hydration\SimpleObjectHydrator;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\Mapping\ClassMetadataFactory;
 use Doctrine\ORM\NativeQuery;
-use Doctrine\ORM\Proxy\ProxyFactory;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\UnitOfWork;
@@ -23,11 +20,15 @@ use Tests\Eonx\TestUtils\TestCases\StubTestCase;
 
 /**
  * @covers \Eonx\TestUtils\Stubs\Vendor\Doctrine\ORM\EntityManagerStub
+ *
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects) Required to test
+ * @SuppressWarnings(PHPMD.ExcessiveMethodLength) Required to test
  */
 class EntityManagerStubTest extends StubTestCase
 {
     /**
      * {@inheritdoc}
+     *
      * @throws \Doctrine\DBAL\DBALException
      */
     public function getMethodExpectations(): iterable
@@ -279,7 +280,8 @@ class EntityManagerStubTest extends StubTestCase
 
         yield 'transactional' => [
             'method' => 'transactional',
-            'args' => ['func' => static function () {}],
+            'args' => ['func' => static function (): void {
+            }],
             'return' => null
         ];
     }

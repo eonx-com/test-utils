@@ -20,7 +20,8 @@ abstract class StubTestCase extends UnitTestCase
     abstract public function getMethodExpectations(): iterable;
 
     /**
-     * Data provider for testStubMethods
+     * Data provider for testStubMethods.
+     *
      * @return mixed[]
      */
     public function getStubMethodData(): iterable
@@ -64,7 +65,7 @@ abstract class StubTestCase extends UnitTestCase
      * @param string $method
      * @param mixed $returnValue
      *
-     * @return BaseStub
+     * @return \Eonx\TestUtils\Stubs\BaseStub
      */
     protected function createStubForTest(string $method, $returnValue): BaseStub
     {

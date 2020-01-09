@@ -22,3 +22,6 @@ parameters:
         -
             message: '#.* with no value type specified in iterable type Symfony\\Component\\Validator\\ConstraintViolationListInterface\.#'
             path: src/TestCases/
+        -
+            message: '#Variable method call on Eonx\\TestUtils\\Stubs\\BaseStub\.#'
+            path: tests/TestCases/StubTestCase.php
