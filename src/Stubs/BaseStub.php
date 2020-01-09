@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Eonx\TestUtils\Stubs;
 
 use Eonx\TestUtils\Exceptions\Stubs\NoResponsesConfiguredException;
+use RuntimeException;
 use Throwable;
 
 /**
@@ -13,6 +14,14 @@ use Throwable;
  */
 abstract class BaseStub
 {
+    /**
+     * The constant used for the default value in returnOrThrowResponse to indicate
+     * the calling method did not provide a default.
+     *
+     * @const string
+     */
+    private const NOT_PROVIDED = '______NOT_PROVIDED';
+
     /**
      * Storage of all calls made to stubbed methods.
      *
@@ -57,60 +66,66 @@ abstract class BaseStub
     /**
      * Get a list of calls made to a particular method.
      *
-     * This method should be called from a method called 'getXyzCalls()' where Xyz is the name
-     *  of the original method being implemented from the interface. The following code
-     *  snippet can be inserted into this function:
-     *      return $this->getCalls(__FUNCTION__);
-     *
-     * @param string $method The method name of the getter function.
-     *  This must be named 'getXyzCalls', where Xyz is the method name being spied on.
+     * @param string $method The method name to return calls for.
      *
      * @return mixed[] A list of all the calls made to the original method.
      */
-    protected function getCalls(string $method): array
+    public function getCalls(string $method): array
     {
-        if (\preg_match('/^get(.*)Calls$/', $method, $matches) !== 1) {
-            throw new \RuntimeException(\sprintf(
-                'Get method "%s" doesn\'t match required format of getMethodCalls()',
+        if (\method_exists($this, $method) === false) {
+            throw new RuntimeException(\sprintf(
+                'Method "%s" does not exist on this stub.',
                 $method
             ));
         }
 
-        $method = \lcfirst($matches[1]);
-
-        if (\array_key_exists($method, $this->calls)) {
-            return $this->calls[$method];
-        }
-
-        return [];
+        return $this->calls[$method] ?? [];
     }
 
     /**
-     * Return the next item queued for response.
+     * Return the next item queued for response. If there is no response configured
+     * but a default is provided, it will be returned instead.
      *
      * This can be called with the following snippet:
-     *      return $this->returnOrThrowResponse(__FUNCTION__);
+     *      return $this->returnOrThrowResponse(__FUNCTION__, 'defaultValue');
      *
      * @param string $method The name of the original method to return the response for.
+     * @param mixed $default
      *
      * @return mixed A preprogrammed response.
+     *
+     * @noinspection ParameterDefaultValueIsNotNullInspection Non null default is required to operate
      */
-    protected function returnOrThrowResponse(string $method)
+    protected function returnOrThrowResponse(string $method, $default = self::NOT_PROVIDED)
     {
-        if (\array_key_exists($method, $this->responses) === false) {
+        // If we dont have a default value provided, and there are no responses defined
+        // for this method, we will throw. For no throw behaviour, this method must be
+        // provided with a default value.
+        if (\array_key_exists($method, $this->responses) === false &&
+            $default === self::NOT_PROVIDED) {
             throw new NoResponsesConfiguredException(\sprintf(
                 'No responses found in stub for method "%s"',
                 $method
             ));
         }
 
-        $response = \array_shift($this->responses[$method]);
+        $response = $default;
 
+        // If we have the method defined in the responses array, shift a response
+        // from that array (or use the default if we've run out of responses.
+        if (\array_key_exists($method, $this->responses) === true) {
+            $response = \array_shift($this->responses[$method]) ?? $response;
+        }
+
+        // If the response is throwable, we're going to throw it instead.
         if ($response instanceof Throwable === true) {
             throw $response;
         }
 
-        return $response;
+        // If we got here, and the response is still NOT_PROVIDED we'll return a null.
+        return $response === self::NOT_PROVIDED
+            ? null
+            : $response;
     }
 
     /**

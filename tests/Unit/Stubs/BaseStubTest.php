@@ -6,11 +6,12 @@ namespace Tests\Eonx\TestUtils\Unit\Stubs;
 use Eonx\TestUtils\Exceptions\Stubs\NoResponsesConfiguredException;
 use Eonx\TestUtils\TestCases\UnitTestCase;
 use Exception;
-use RuntimeException;
 use Tests\Eonx\TestUtils\Stubs\Stubs\BaseStubStub;
 
 /**
  * @covers \Eonx\TestUtils\Stubs\BaseStub
+ *
+ * @SuppressWarnings(PHPMD.EmptyCatchBlock) Required to test
  */
 class BaseStubTest extends UnitTestCase
 {
@@ -38,7 +39,6 @@ class BaseStubTest extends UnitTestCase
         $first = $stub->example('in-1');
         $second = $stub->example('in-2');
 
-
         $exception = null;
         try {
             $stub->example('in-3');
@@ -63,21 +63,6 @@ class BaseStubTest extends UnitTestCase
         $expectedCalls = [];
 
         self::assertSame($expectedCalls, $stub->getExampleCalls());
-    }
-
-    /**
-     * Tests an incorrectly configured get<Method>Calls function.
-     *
-     * @return void
-     */
-    public function testBadGetCallsMethod(): void
-    {
-        $stub = new BaseStubStub();
-
-        $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Get method "getBadness" doesn\'t match required format of getMethodCalls()');
-
-        $stub->getBadness();
     }
 
     /**
