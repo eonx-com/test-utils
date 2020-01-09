@@ -66,32 +66,20 @@ abstract class BaseStub
     /**
      * Get a list of calls made to a particular method.
      *
-     * This method should be called from a method called 'getXyzCalls()' where Xyz is the name
-     *  of the original method being implemented from the interface. The following code
-     *  snippet can be inserted into this function:
-     *      return $this->getCalls(__FUNCTION__);
-     *
-     * @param string $method The method name of the getter function.
-     *  This must be named 'getXyzCalls', where Xyz is the method name being spied on.
+     * @param string $method The method name to return calls for.
      *
      * @return mixed[] A list of all the calls made to the original method.
      */
-    protected function getCalls(string $method): array
+    public function getCalls(string $method): array
     {
-        if (\preg_match('/^get(.*)Calls$/', $method, $matches) !== 1) {
+        if (\method_exists($this, $method) === false) {
             throw new RuntimeException(\sprintf(
-                'Get method "%s" doesn\'t match required format of getMethodCalls()',
+                'Method "%s" does not exist on this stub.',
                 $method
             ));
         }
 
-        $method = \lcfirst($matches[1]);
-
-        if (\array_key_exists($method, $this->calls)) {
-            return $this->calls[$method];
-        }
-
-        return [];
+        return $this->calls[$method] ?? [];
     }
 
     /**
@@ -118,13 +106,16 @@ abstract class BaseStub
             ));
         }
 
-        $response = \array_shift($this->responses[$method]) ?? $default;
+        $methodResponses = $this->responses[$method] ?? [];
+        $response = \array_shift($methodResponses) ?? $default;
 
         if ($response instanceof Throwable === true) {
             throw $response;
         }
 
-        return $response;
+        return $response === self::NOT_PROVIDED
+            ? null
+            : $response;
     }
 
     /**

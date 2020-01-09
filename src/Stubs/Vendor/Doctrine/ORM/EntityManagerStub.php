@@ -10,6 +10,7 @@ use Doctrine\ORM\Configuration;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Internal\Hydration\AbstractHydrator;
 use Doctrine\ORM\Mapping\ClassMetadata;
+use Doctrine\ORM\Mapping\ClassMetadataFactory as ORMClassMetadataFactory;
 use Doctrine\ORM\NativeQuery;
 use Doctrine\ORM\Proxy\ProxyFactory;
 use Doctrine\ORM\Query;
@@ -19,6 +20,9 @@ use Doctrine\ORM\UnitOfWork;
 use Doctrine\Persistence\Mapping\ClassMetadataFactory;
 use Eonx\TestUtils\Stubs\BaseStub;
 
+/**
+ * @SuppressWarnings(PHPMD) Interface is not under our control.
+ */
 class EntityManagerStub extends BaseStub implements EntityManagerInterface
 {
     /**
@@ -28,7 +32,7 @@ class EntityManagerStub extends BaseStub implements EntityManagerInterface
     {
         $this->saveCalls(__FUNCTION__, \get_defined_vars());
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -36,7 +40,7 @@ class EntityManagerStub extends BaseStub implements EntityManagerInterface
     {
         $this->saveCalls(__FUNCTION__, \get_defined_vars());
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -62,7 +66,7 @@ class EntityManagerStub extends BaseStub implements EntityManagerInterface
 
         return $this->returnOrThrowResponse(__FUNCTION__, false);
     }
-
+    
     /**
      * {@inheritdoc}
      *
@@ -74,7 +78,7 @@ class EntityManagerStub extends BaseStub implements EntityManagerInterface
 
         return $this->returnOrThrowResponse(__FUNCTION__, clone $entity);
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -124,7 +128,7 @@ class EntityManagerStub extends BaseStub implements EntityManagerInterface
 
         return $this->returnOrThrowResponse(__FUNCTION__, new QueryBuilder($this));
     }
-
+    
     /**
      * {@inheritdoc}
      *
@@ -134,7 +138,7 @@ class EntityManagerStub extends BaseStub implements EntityManagerInterface
     {
         $this->saveCalls(__FUNCTION__, \get_defined_vars());
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -144,7 +148,7 @@ class EntityManagerStub extends BaseStub implements EntityManagerInterface
 
         return $this->returnOrThrowResponse(__FUNCTION__, null);
     }
-
+    
     /**
      * {@inheritdoc}
      */
@@ -152,7 +156,7 @@ class EntityManagerStub extends BaseStub implements EntityManagerInterface
     {
         $this->saveCalls(__FUNCTION__, \get_defined_vars());
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -184,7 +188,7 @@ class EntityManagerStub extends BaseStub implements EntityManagerInterface
     {
         $this->saveCalls(__FUNCTION__, \get_defined_vars());
 
-        return $this->returnOrThrowResponse(__FUNCTION__);
+        return $this->returnOrThrowResponse(__FUNCTION__, new Configuration());
     }
     
     /**
@@ -204,7 +208,7 @@ class EntityManagerStub extends BaseStub implements EntityManagerInterface
     {
         $this->saveCalls(__FUNCTION__, \get_defined_vars());
 
-        return $this->returnOrThrowResponse(__FUNCTION__);
+        return $this->returnOrThrowResponse(__FUNCTION__, new EventManager());
     }
     
     /**
@@ -230,6 +234,8 @@ class EntityManagerStub extends BaseStub implements EntityManagerInterface
     /**
      * {@inheritdoc}
      *
+     * @codeCoverageIgnore
+     *
      * @deprecated
      */
     public function getHydrator($hydrationMode): AbstractHydrator
@@ -246,7 +252,7 @@ class EntityManagerStub extends BaseStub implements EntityManagerInterface
     {
         $this->saveCalls(__FUNCTION__, \get_defined_vars());
 
-        return $this->returnOrThrowResponse(__FUNCTION__);
+        return $this->returnOrThrowResponse(__FUNCTION__, new ORMClassMetadataFactory());
     }
     
     /**
@@ -261,6 +267,8 @@ class EntityManagerStub extends BaseStub implements EntityManagerInterface
     
     /**
      * {@inheritdoc}
+     *
+     * @codeCoverageIgnore
      */
     public function getProxyFactory(): ProxyFactory
     {
@@ -298,7 +306,7 @@ class EntityManagerStub extends BaseStub implements EntityManagerInterface
     {
         $this->saveCalls(__FUNCTION__, \get_defined_vars());
 
-        return $this->returnOrThrowResponse(__FUNCTION__);
+        return $this->returnOrThrowResponse(__FUNCTION__, new UnitOfWork($this));
     }
     
     /**
@@ -359,6 +367,8 @@ class EntityManagerStub extends BaseStub implements EntityManagerInterface
     
     /**
      * {@inheritdoc}
+     *
+     * @codeCoverageIgnore
      */
     public function newHydrator($hydrationMode): AbstractHydrator
     {
