@@ -15,6 +15,14 @@ use Throwable;
 abstract class BaseStub
 {
     /**
+     * The constant used for the default value in returnOrThrowResponse to indicate
+     * the calling method did not provide a default.
+     *
+     * @const string
+     */
+    private const NOT_PROVIDED = '______NOT_PROVIDED';
+
+    /**
      * Storage of all calls made to stubbed methods.
      *
      * Calls are keyed by method name, and as a list of arrays where method names are keys.
@@ -87,25 +95,30 @@ abstract class BaseStub
     }
 
     /**
-     * Return the next item queued for response.
+     * Return the next item queued for response. If there is no response configured
+     * but a default is provided, it will be returned instead.
      *
      * This can be called with the following snippet:
-     *      return $this->returnOrThrowResponse(__FUNCTION__);
+     *      return $this->returnOrThrowResponse(__FUNCTION__, 'defaultValue');
      *
      * @param string $method The name of the original method to return the response for.
+     * @param mixed $default
      *
      * @return mixed A preprogrammed response.
+     *
+     * @noinspection ParameterDefaultValueIsNotNullInspection Non null default is required to operate
      */
-    protected function returnOrThrowResponse(string $method)
+    protected function returnOrThrowResponse(string $method, $default = self::NOT_PROVIDED)
     {
-        if (\array_key_exists($method, $this->responses) === false) {
+        if (\array_key_exists($method, $this->responses) === false &&
+            $default === self::NOT_PROVIDED) {
             throw new NoResponsesConfiguredException(\sprintf(
                 'No responses found in stub for method "%s"',
                 $method
             ));
         }
 
-        $response = \array_shift($this->responses[$method]);
+        $response = \array_shift($this->responses[$method]) ?? $default;
 
         if ($response instanceof Throwable === true) {
             throw $response;
