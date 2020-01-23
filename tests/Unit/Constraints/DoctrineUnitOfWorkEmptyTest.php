@@ -4,11 +4,11 @@ declare(strict_types=1);
 namespace Tests\Eonx\TestUtils\Unit\Constraints;
 
 use Eonx\TestUtils\Constraints\DoctrineUnitOfWorkEmpty;
+use Eonx\TestUtils\Stubs\Vendor\Doctrine\ORM\EntityManagerStub;
 use Eonx\TestUtils\TestCases\UnitTestCase;
 use PHPUnit\Framework\AssertionFailedError;
 use PHPUnit\Framework\ExpectationFailedException;
 use stdClass;
-use Tests\Eonx\TestUtils\Stubs\Vendor\Doctrine\EntityManagerStub;
 use Tests\Eonx\TestUtils\Stubs\Vendor\Doctrine\UnitOfWorkStub;
 
 /**
@@ -44,7 +44,9 @@ class DoctrineUnitOfWorkEmptyTest extends UnitTestCase
             [new stdClass()],
             [new stdClass()],
         );
-        $entityManager = new EntityManagerStub($unitOfWork);
+        $entityManager = new EntityManagerStub([
+            'getUnitOfWork' => [$unitOfWork]
+        ]);
 
         // Expected an exception which has comparision diff
         $this->expectException(ExpectationFailedException::class);

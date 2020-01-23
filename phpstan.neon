@@ -11,9 +11,6 @@ parameters:
             message: '#.*#'
             path: tests/Stubs/Vendor/Symfony/Validator/ConstraintViolationListNoToStringStub.php
         -
-            message: '#.*#'
-            path: tests/Stubs/Vendor/Doctrine/EntityManagerStub.php
-        -
             message: '#.* with no value type specified in iterable type Symfony\\Component\\Validator\\ConstraintViolationListInterface\.#'
             path: src/TestCases/
         -

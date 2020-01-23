@@ -3,7 +3,9 @@ declare(strict_types=1);
 
 namespace Tests\Eonx\TestUtils\Stubs\Vendor\Doctrine;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\UnitOfWork;
+use Eonx\TestUtils\Stubs\Vendor\Doctrine\ORM\EntityManagerStub;
 
 /**
  * @coversNothing
@@ -53,13 +55,15 @@ class UnitOfWorkStub extends UnitOfWork
      * @param mixed[] $entityDeletions
      * @param mixed[] $entityInsertions
      * @param mixed[] $entityUpdates
+     * @param \Doctrine\ORM\EntityManagerInterface|null $entityManager
      */
     public function __construct(
         array $collectionDeletions = [],
         array $collectionUpdates = [],
         array $entityDeletions = [],
         array $entityInsertions = [],
-        array $entityUpdates = []
+        array $entityUpdates = [],
+        ?EntityManagerInterface $entityManager = null
     ) {
         $this->collectionDeletions = $collectionDeletions;
         $this->collectionUpdates = $collectionUpdates;
@@ -67,7 +71,7 @@ class UnitOfWorkStub extends UnitOfWork
         $this->entityInsertions = $entityInsertions;
         $this->entityUpdates = $entityUpdates;
 
-        parent::__construct(new EntityManagerStub($this));
+        parent::__construct($entityManager ?? new EntityManagerStub());
     }
 
     /**

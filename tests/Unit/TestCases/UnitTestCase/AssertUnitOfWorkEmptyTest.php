@@ -3,10 +3,10 @@ declare(strict_types=1);
 
 namespace Tests\Eonx\TestUtils\Unit\TestCases\UnitTestCase;
 
+use Eonx\TestUtils\Stubs\Vendor\Doctrine\ORM\EntityManagerStub;
 use Eonx\TestUtils\TestCases\UnitTestCase;
 use PHPUnit\Framework\ExpectationFailedException;
 use stdClass;
-use Tests\Eonx\TestUtils\Stubs\Vendor\Doctrine\EntityManagerStub;
 use Tests\Eonx\TestUtils\Stubs\Vendor\Doctrine\UnitOfWorkStub;
 
 /**
@@ -22,7 +22,9 @@ class AssertUnitOfWorkEmptyTest extends UnitTestCase
     public function testAssertionFails(): void
     {
         $unitOfWork = new UnitOfWorkStub([new stdClass()]);
-        $entityManager = new EntityManagerStub($unitOfWork);
+        $entityManager = new EntityManagerStub([
+            'getUnitOfWork' => [$unitOfWork]
+        ]);
 
         $this->expectException(ExpectationFailedException::class);
         $this->expectExceptionMessage('Failed asserting that unit of work has no pending changes.');
