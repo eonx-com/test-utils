@@ -35,5 +35,10 @@
     "psr-4": {
       "Tests\\Eonx\\TestUtils\\": "tests/"
     }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "0.0.x-dev"
+    }
   }
 }

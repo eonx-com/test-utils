@@ -33,4 +33,15 @@ class ContainerStub extends Container
     {
         return $this->classBindings;
     }
+
+    /**
+     * Resets class bindings back to empty so that tests can assert
+     * against only things the provider has added.
+     *
+     * @return void
+     */
+    public function resetClassBindings(): void
+    {
+        $this->classBindings = [];
+    }
 }
