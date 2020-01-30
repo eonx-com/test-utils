@@ -153,7 +153,8 @@ abstract class BaseStub
         if (\array_key_exists($method, $this->responses) === false &&
             $default === self::NOT_PROVIDED) {
             throw new NoResponsesConfiguredException(\sprintf(
-                'No responses found in stub for method "%s"',
+                'No responses found in stub for method "%s::%s"',
+                \get_class($this),
                 $method
             ));
         }

@@ -118,7 +118,7 @@ class BaseStubTest extends UnitTestCase
         $stub = new BaseStubStub();
 
         $this->expectException(NoResponsesConfiguredException::class);
-        $this->expectExceptionMessage('No responses found in stub for method "example"');
+        $this->expectExceptionMessage('No responses found in stub for method "Tests\Eonx\TestUtils\Stubs\Stubs\BaseStubStub::example"'); // phpcs:ignore
 
         $stub->example('arg');
     }
