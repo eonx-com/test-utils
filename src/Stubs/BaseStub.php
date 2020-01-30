@@ -102,28 +102,7 @@ abstract class BaseStub
         $default = self::NOT_PROVIDED,
         ?array $methodArgs = null
     ) {
-        $responsesConfigured = \array_key_exists($method, $this->responses) === true;
-
-        // If we dont have a default value provided, and there are no responses defined
-        // for this method, we will throw. For no throw behaviour, this method must be
-        // provided with a default value.
-        if ($responsesConfigured === false && $default === self::NOT_PROVIDED) {
-            throw new NoResponsesConfiguredException(\sprintf(
-                'No responses found in stub for method "%s"',
-                $method
-            ));
-        }
-
-        $response = $default;
-
-        // If we get a multi dimensional array, which indicates a stack of
-        // responses, otherwise if there is a value that is a non array it
-        // will be used directly (supporting a "always return X" approach).
-        if (\is_array($this->responses[$method]) === true) {
-            $response = \array_shift($this->responses[$method]) ?? $default;
-        } elseif ($responsesConfigured) {
-            $response = $this->responses[$method];
-        }
+        $response = $this->getResponseFor($method, $default);
 
         // If we got a callable and we were passed the method args, call it and
         // return its value.
@@ -156,5 +135,41 @@ abstract class BaseStub
     protected function saveCalls(string $method, array $args): void
     {
         $this->calls[$method][] = $args;
+    }
+
+    /**
+     * Finds a response to use for the method.
+     *
+     * @param string $method
+     * @param mixed $default
+     *
+     * @return mixed
+     */
+    private function getResponseFor(string $method, $default)
+    {
+        // If we dont have a default value provided, and there are no responses defined
+        // for this method, we will throw. For no throw behaviour, this method must be
+        // provided with a default value.
+        if (\array_key_exists($method, $this->responses) === false &&
+            $default === self::NOT_PROVIDED) {
+            throw new NoResponsesConfiguredException(\sprintf(
+                'No responses found in stub for method "%s"',
+                $method
+            ));
+        }
+
+        // If we dont have a response configured, we have a default - lets return it.
+        if (\array_key_exists($method, $this->responses) === false) {
+            return $default;
+        }
+
+        // If we have an array, assume it is a stack of responses and shift the first
+        // response to be returned. If it is an empty array, return the default value.
+        if (\is_array($this->responses[$method]) === true) {
+            return \array_shift($this->responses[$method]) ?? $default;
+        }
+
+        // If we got here, the response for $method is a non array value, return it as is.
+        return $this->responses[$method];
     }
 }
