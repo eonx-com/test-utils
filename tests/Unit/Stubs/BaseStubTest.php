@@ -52,6 +52,49 @@ class BaseStubTest extends UnitTestCase
     }
 
     /**
+     * Tests a callable response
+     *
+     * @return void
+     */
+    public function testStubCallable(): void
+    {
+        $stub = new BaseStubStub([
+            'callable' => static function (string $arg1, int $arg2): float {
+                return \mb_strlen($arg1) * $arg2 / 100;
+            }
+        ]);
+
+        $expectedCalls = [
+            ['arg1' => 'long', 'arg2' => 56]
+        ];
+
+        $result = $stub->callable('long', 56);
+
+        self::assertSame(2.24, $result);
+        self::assertSame($expectedCalls, $stub->getCalls('callable'));
+    }
+
+    /**
+     * Tests a callable response
+     *
+     * @return void
+     */
+    public function testScalarAlwaysRespond(): void
+    {
+        $stub = new BaseStubStub([
+            'example' => 'out'
+        ]);
+
+        $result = $stub->example('in');
+        $result2 = $stub->example('in');
+        $result3 = $stub->example('in');
+
+        self::assertSame('out', $result);
+        self::assertSame('out', $result2);
+        self::assertSame('out', $result3);
+    }
+
+    /**
      * Tests typical stub operation.
      *
      * @return void

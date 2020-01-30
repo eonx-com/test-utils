@@ -16,7 +16,7 @@
     "eonx-com/apiformats": "^1.0",
     "eonx-com/requesthandlers": "^1.2",
     "eonx-com/search": "^2.0",
-    "eonx-com/standards": "^0.2.2",
+    "eonx-com/standards": "^0.3",
     "phpmd/phpmd": "^2.7",
     "phpstan/phpstan": "^0.12.3",
     "phpstan/phpstan-phpunit": "^0.12",
