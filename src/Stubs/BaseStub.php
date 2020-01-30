@@ -91,18 +91,23 @@ abstract class BaseStub
      *
      * @param string $method The name of the original method to return the response for.
      * @param mixed $default
+     * @param mixed[]|null $methodArgs
      *
      * @return mixed A preprogrammed response.
      *
      * @noinspection ParameterDefaultValueIsNotNullInspection Non null default is required to operate
      */
-    protected function returnOrThrowResponse(string $method, $default = self::NOT_PROVIDED)
-    {
+    protected function returnOrThrowResponse(
+        string $method,
+        $default = self::NOT_PROVIDED,
+        ?array $methodArgs = null
+    ) {
+        $responsesConfigured = \array_key_exists($method, $this->responses) === true;
+
         // If we dont have a default value provided, and there are no responses defined
         // for this method, we will throw. For no throw behaviour, this method must be
         // provided with a default value.
-        if (\array_key_exists($method, $this->responses) === false &&
-            $default === self::NOT_PROVIDED) {
+        if ($responsesConfigured === false && $default === self::NOT_PROVIDED) {
             throw new NoResponsesConfiguredException(\sprintf(
                 'No responses found in stub for method "%s"',
                 $method
@@ -111,10 +116,19 @@ abstract class BaseStub
 
         $response = $default;
 
-        // If we have the method defined in the responses array, shift a response
-        // from that array (or use the default if we've run out of responses.
-        if (\array_key_exists($method, $this->responses) === true) {
-            $response = \array_shift($this->responses[$method]) ?? $response;
+        // If we get a multi dimensional array, which indicates a stack of
+        // responses, otherwise if there is a value that is a non array it
+        // will be used directly (supporting a "always return X" approach).
+        if (\is_array($this->responses[$method]) === true) {
+            $response = \array_shift($this->responses[$method]) ?? $default;
+        } elseif ($responsesConfigured) {
+            $response = $this->responses[$method];
+        }
+
+        // If we got a callable and we were passed the method args, call it and
+        // return its value.
+        if (\is_callable($response) === true && \is_array($methodArgs) === true) {
+            return \call_user_func_array($response, $methodArgs);
         }
 
         // If the response is throwable, we're going to throw it instead.

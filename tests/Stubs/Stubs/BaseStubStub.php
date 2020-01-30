@@ -55,4 +55,19 @@ class BaseStubStub extends BaseStub
 
         return $this->returnOrThrowResponse(__FUNCTION__);
     }
+
+    /**
+     * Test for a callable response.
+     *
+     * @param string $arg1
+     * @param int $arg2
+     *
+     * @return float
+     */
+    public function callable(string $arg1, int $arg2): float
+    {
+        $this->saveCalls(__FUNCTION__, \get_defined_vars());
+
+        return $this->returnOrThrowResponse(__FUNCTION__, null, \func_get_args());
+    }
 }
