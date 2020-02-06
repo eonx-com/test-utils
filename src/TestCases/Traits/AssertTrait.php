@@ -12,7 +12,7 @@ use Eonx\TestUtils\Constraints\JsonSameAsArray;
 use Eonx\TestUtils\Constraints\RequestProperties;
 use Eonx\TestUtils\Constraints\ResponseNoException;
 use Eonx\TestUtils\Constraints\SymfonyConstraintViolation;
-use Eonx\TestUtils\Helpers\Interfaces\ClientStubInterface;
+use Eonx\TestUtils\Stubs\Interfaces\Eonx\Search\ClientStubInterface;
 use LoyaltyCorp\RequestHandlers\Request\RequestObjectInterface;
 use PHPUnit\Framework\Constraint\IsIdentical;
 use Symfony\Component\HttpFoundation\Response;
@@ -73,22 +73,20 @@ trait AssertTrait
     /**
      * Ensures that the search system received the expected document ids for update.
      *
-     * phpcs:disable
+     * @phpstan-param array<string, array<string>> $expectedValues
      *
-     * @param array<string, array<string>> $expectedValues
-     * @param \Eonx\TestUtils\Helpers\Interfaces\ClientStubInterface $client
+     * @param string[][] $expectedValues
+     * @param \Eonx\TestUtils\Stubs\Interfaces\Eonx\Search\ClientStubInterface $client
      *
      * @return void
-     *
-     * phpcs:enable
      */
     public static function assertDocumentIdsUpdated(array $expectedValues, ClientStubInterface $client): void
     {
-        $updates = \array_merge(...$client->getUpdatedIndices());
+        $actions = $client->getBulkActions();
 
         $documents = [];
-        foreach ($updates as $update) {
-            $documents[$update->getIndex()][] = $update->getDocumentId();
+        foreach ($actions as $action) {
+            $documents[$action->getIndex()][] = $action->getDocumentAction()->getDocumentId();
         }
 
         $constraint = new ArraySame($expectedValues);
