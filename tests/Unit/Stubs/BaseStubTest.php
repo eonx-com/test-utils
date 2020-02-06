@@ -16,6 +16,64 @@ use Tests\Eonx\TestUtils\Stubs\Stubs\BaseStubStub;
 class BaseStubTest extends UnitTestCase
 {
     /**
+     * Tests an incorrectly configured get<Method>Calls function.
+     *
+     * @return void
+     */
+    public function testNoResponesConfigured(): void
+    {
+        $stub = new BaseStubStub();
+
+        $this->expectException(NoResponsesConfiguredException::class);
+        $this->expectExceptionMessage('No responses found in stub for method "Tests\Eonx\TestUtils\Stubs\Stubs\BaseStubStub::example"'); // phpcs:ignore
+
+        $stub->example('arg');
+    }
+
+    /**
+     * Tests a callable response
+     *
+     * @return void
+     */
+    public function testScalarAlwaysRespond(): void
+    {
+        $stub = new BaseStubStub([
+            'example' => 'out'
+        ]);
+
+        $result = $stub->example('in');
+        $result2 = $stub->example('in');
+        $result3 = $stub->example('in');
+
+        self::assertSame('out', $result);
+        self::assertSame('out', $result2);
+        self::assertSame('out', $result3);
+    }
+
+    /**
+     * Tests a callable response
+     *
+     * @return void
+     */
+    public function testStubCallable(): void
+    {
+        $stub = new BaseStubStub([
+            'callable' => static function (string $arg1, int $arg2): float {
+                return \mb_strlen($arg1) * $arg2 / 100;
+            }
+        ]);
+
+        $expectedCalls = [
+            ['arg1' => 'long', 'arg2' => 56]
+        ];
+
+        $result = $stub->callable('long', 56);
+
+        self::assertSame(2.24, $result);
+        self::assertSame($expectedCalls, $stub->getCalls('callable'));
+    }
+
+    /**
      * Tests typical stub operation.
      *
      * @return void
@@ -49,49 +107,10 @@ class BaseStubTest extends UnitTestCase
         self::assertSame($expectedCalls, $stub->getExampleCalls());
         self::assertSame('out-1', $first);
         self::assertSame('out-2', $second);
-    }
 
-    /**
-     * Tests a callable response
-     *
-     * @return void
-     */
-    public function testStubCallable(): void
-    {
-        $stub = new BaseStubStub([
-            'callable' => static function (string $arg1, int $arg2): float {
-                return \mb_strlen($arg1) * $arg2 / 100;
-            }
-        ]);
+        $stub->resetStub();
 
-        $expectedCalls = [
-            ['arg1' => 'long', 'arg2' => 56]
-        ];
-
-        $result = $stub->callable('long', 56);
-
-        self::assertSame(2.24, $result);
-        self::assertSame($expectedCalls, $stub->getCalls('callable'));
-    }
-
-    /**
-     * Tests a callable response
-     *
-     * @return void
-     */
-    public function testScalarAlwaysRespond(): void
-    {
-        $stub = new BaseStubStub([
-            'example' => 'out'
-        ]);
-
-        $result = $stub->example('in');
-        $result2 = $stub->example('in');
-        $result3 = $stub->example('in');
-
-        self::assertSame('out', $result);
-        self::assertSame('out', $result2);
-        self::assertSame('out', $result3);
+        self::assertSame([], $stub->getExampleCalls());
     }
 
     /**
@@ -106,20 +125,5 @@ class BaseStubTest extends UnitTestCase
         $expectedCalls = [];
 
         self::assertSame($expectedCalls, $stub->getExampleCalls());
-    }
-
-    /**
-     * Tests an incorrectly configured get<Method>Calls function.
-     *
-     * @return void
-     */
-    public function testNoResponesConfigured(): void
-    {
-        $stub = new BaseStubStub();
-
-        $this->expectException(NoResponsesConfiguredException::class);
-        $this->expectExceptionMessage('No responses found in stub for method "Tests\Eonx\TestUtils\Stubs\Stubs\BaseStubStub::example"'); // phpcs:ignore
-
-        $stub->example('arg');
     }
 }
