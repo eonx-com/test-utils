@@ -108,7 +108,7 @@ class BaseStubTest extends UnitTestCase
         self::assertSame('out-1', $first);
         self::assertSame('out-2', $second);
 
-        $stub->resetStub();
+        $stub->resetStubCalls();
 
         self::assertSame([], $stub->getExampleCalls());
     }

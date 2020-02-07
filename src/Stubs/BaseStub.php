@@ -87,7 +87,7 @@ abstract class BaseStub
      *
      * @return void
      */
-    public function resetStub(): void
+    public function resetStubCalls(): void
     {
         $this->calls = [];
     }
