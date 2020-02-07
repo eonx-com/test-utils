@@ -83,6 +83,16 @@ abstract class BaseStub
     }
 
     /**
+     * Resets the stub's record of all calls.
+     *
+     * @return void
+     */
+    public function resetStubCalls(): void
+    {
+        $this->calls = [];
+    }
+
+    /**
      * Return the next item queued for response. If there is no response configured
      * but a default is provided, it will be returned instead.
      *

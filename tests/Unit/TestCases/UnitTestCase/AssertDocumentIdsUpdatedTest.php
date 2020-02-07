@@ -3,9 +3,10 @@ declare(strict_types=1);
 
 namespace Tests\Eonx\TestUtils\Unit\TestCases\UnitTestCase;
 
-use Eonx\TestUtils\Helpers\SearchClientStub;
+use Eonx\TestUtils\Stubs\Eonx\Search\SearchClientStub;
 use Eonx\TestUtils\TestCases\UnitTestCase;
 use LoyaltyCorp\Search\DataTransferObjects\DocumentUpdate;
+use LoyaltyCorp\Search\DataTransferObjects\IndexAction;
 use PHPUnit\Framework\ExpectationFailedException;
 
 /**
@@ -21,10 +22,16 @@ class AssertDocumentIdsUpdatedTest extends UnitTestCase
     public function testDocumentIdsUpdatedAssertion(): void
     {
         $clientStub = new SearchClientStub();
-        $clientStub->bulkUpdate(
+        $clientStub->bulk(
             [
-                new DocumentUpdate('transaction', 'trans_id_1', ['key' => 'value']),
-                new DocumentUpdate('transaction', 'trans_id_2', ['key' => 'value'])
+                new IndexAction(
+                    new DocumentUpdate('trans_id_1', ['key' => 'value']),
+                    'transaction'
+                ),
+                new IndexAction(
+                    new DocumentUpdate('trans_id_2', ['key' => 'value']),
+                    'transaction'
+                )
             ]
         );
 
@@ -46,10 +53,16 @@ class AssertDocumentIdsUpdatedTest extends UnitTestCase
     public function testDocumentIdsUpdatedAssertionFails(): void
     {
         $clientStub = new SearchClientStub();
-        $clientStub->bulkUpdate(
+        $clientStub->bulk(
             [
-                new DocumentUpdate('transaction', 'trans_id_1', ['key' => 'value']),
-                new DocumentUpdate('transaction', 'trans_id_2', ['key' => 'value'])
+                new IndexAction(
+                    new DocumentUpdate('trans_id_1', ['key' => 'value']),
+                    'transaction'
+                ),
+                new IndexAction(
+                    new DocumentUpdate('trans_id_2', ['key' => 'value']),
+                    'transaction'
+                )
             ]
         );
 
