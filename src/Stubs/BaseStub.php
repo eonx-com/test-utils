@@ -20,7 +20,7 @@ abstract class BaseStub
      *
      * @const string
      */
-    private const NOT_PROVIDED = '______NOT_PROVIDED';
+    protected const NOT_PROVIDED = '______NOT_PROVIDED';
 
     /**
      * Storage of all calls made to stubbed methods.
