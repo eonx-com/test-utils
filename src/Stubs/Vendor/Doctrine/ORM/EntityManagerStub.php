@@ -30,9 +30,7 @@ class EntityManagerStub extends BaseStub implements EntityManagerInterface
      */
     public function beginTransaction(): void
     {
-        $this->saveCalls(__FUNCTION__, \get_defined_vars());
-
-        $this->returnOrThrowResponse(__FUNCTION__, null, \func_get_args());
+        $this->saveCallsAndThrow(__FUNCTION__, \get_defined_vars());
     }
 
     /**
@@ -40,9 +38,7 @@ class EntityManagerStub extends BaseStub implements EntityManagerInterface
      */
     public function clear($objectName = null): void
     {
-        $this->saveCalls(__FUNCTION__, \get_defined_vars());
-
-        $this->returnOrThrowResponse(__FUNCTION__, null, \func_get_args());
+        $this->saveCallsAndThrow(__FUNCTION__, \get_defined_vars());
     }
 
     /**
@@ -50,9 +46,7 @@ class EntityManagerStub extends BaseStub implements EntityManagerInterface
      */
     public function close(): void
     {
-        $this->saveCalls(__FUNCTION__, \get_defined_vars());
-
-        $this->returnOrThrowResponse(__FUNCTION__, null, \func_get_args());
+        $this->saveCallsAndThrow(__FUNCTION__, \get_defined_vars());
     }
     
     /**
@@ -60,9 +54,7 @@ class EntityManagerStub extends BaseStub implements EntityManagerInterface
      */
     public function commit(): void
     {
-        $this->saveCalls(__FUNCTION__, \get_defined_vars());
-
-        $this->returnOrThrowResponse(__FUNCTION__, null, \func_get_args());
+        $this->saveCallsAndThrow(__FUNCTION__, \get_defined_vars());
     }
     
     /**
@@ -144,9 +136,7 @@ class EntityManagerStub extends BaseStub implements EntityManagerInterface
      */
     public function detach($object): void
     {
-        $this->saveCalls(__FUNCTION__, \get_defined_vars());
-
-        $this->returnOrThrowResponse(__FUNCTION__, null, \func_get_args());
+        $this->saveCallsAndThrow(__FUNCTION__, \get_defined_vars());
     }
 
     /**
@@ -164,9 +154,7 @@ class EntityManagerStub extends BaseStub implements EntityManagerInterface
      */
     public function flush(): void
     {
-        $this->saveCalls(__FUNCTION__, \get_defined_vars());
-
-        $this->returnOrThrowResponse(__FUNCTION__, null, \func_get_args());
+        $this->saveCallsAndThrow(__FUNCTION__, \get_defined_vars());
     }
 
     /**
@@ -336,9 +324,7 @@ class EntityManagerStub extends BaseStub implements EntityManagerInterface
      */
     public function initializeObject($obj): void
     {
-        $this->saveCalls(__FUNCTION__, \get_defined_vars());
-
-        $this->returnOrThrowResponse(__FUNCTION__, null, \func_get_args());
+        $this->saveCallsAndThrow(__FUNCTION__, \get_defined_vars());
     }
     
     /**
@@ -366,9 +352,7 @@ class EntityManagerStub extends BaseStub implements EntityManagerInterface
      */
     public function lock($entity, $lockMode, $lockVersion = null): void
     {
-        $this->saveCalls(__FUNCTION__, \get_defined_vars());
-
-        $this->returnOrThrowResponse(__FUNCTION__, null, \func_get_args());
+        $this->saveCallsAndThrow(__FUNCTION__, \get_defined_vars());
     }
     
     /**
@@ -398,9 +382,7 @@ class EntityManagerStub extends BaseStub implements EntityManagerInterface
      */
     public function persist($object): void
     {
-        $this->saveCalls(__FUNCTION__, \get_defined_vars());
-
-        $this->returnOrThrowResponse(__FUNCTION__, null, \func_get_args());
+        $this->saveCallsAndThrow(__FUNCTION__, \get_defined_vars());
     }
     
     /**
@@ -408,9 +390,7 @@ class EntityManagerStub extends BaseStub implements EntityManagerInterface
      */
     public function refresh($object): void
     {
-        $this->saveCalls(__FUNCTION__, \get_defined_vars());
-
-        $this->returnOrThrowResponse(__FUNCTION__, null, \func_get_args());
+        $this->saveCallsAndThrow(__FUNCTION__, \get_defined_vars());
     }
     
     /**
@@ -418,9 +398,7 @@ class EntityManagerStub extends BaseStub implements EntityManagerInterface
      */
     public function remove($object): void
     {
-        $this->saveCalls(__FUNCTION__, \get_defined_vars());
-
-        $this->returnOrThrowResponse(__FUNCTION__, null, \func_get_args());
+        $this->saveCallsAndThrow(__FUNCTION__, \get_defined_vars());
     }
     
     /**
@@ -428,9 +406,7 @@ class EntityManagerStub extends BaseStub implements EntityManagerInterface
      */
     public function rollback(): void
     {
-        $this->saveCalls(__FUNCTION__, \get_defined_vars());
-
-        $this->returnOrThrowResponse(__FUNCTION__, null, \func_get_args());
+        $this->saveCallsAndThrow(__FUNCTION__, \get_defined_vars());
     }
     
     /**

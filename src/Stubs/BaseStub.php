@@ -148,6 +148,25 @@ abstract class BaseStub
     }
 
     /**
+     * Call this method when a stub's method is a void return but you still want
+     * that method to have a configurable exception thrown.
+     *
+     * This can be called with the following snippet as the first line in the method:
+     *      $this->saveCalls(__FUNCTION__, \get_defined_vars());
+     *
+     * @param string $method
+     * @param mixed[] $args
+     *
+     * @return void
+     */
+    protected function saveCallsAndThrow(string $method, array $args): void
+    {
+        $this->saveCalls($method, $args);
+
+        $this->returnOrThrowResponse($method, null, \array_values($args));
+    }
+
+    /**
      * Finds a response to use for the method.
      *
      * @param string $method
