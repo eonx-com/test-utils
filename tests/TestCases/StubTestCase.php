@@ -55,7 +55,7 @@ abstract class StubTestCase extends UnitTestCase
 
         $result = $stub->$method(...\array_values($inputArgs));
 
-        self::assertSame($returnValue, $result);
+        self::assertEquals($returnValue, $result);
         self::assertEqualsCanonicalizing([$inputArgs], $stub->getCalls($method));
     }
 

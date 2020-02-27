@@ -5,6 +5,9 @@ namespace Tests\Eonx\TestUtils\Stubs\TestCases\Unit;
 
 use Eonx\TestUtils\TestCases\Unit\LaravelServiceProviderTestCase;
 
+/**
+ * @coversNothing
+ */
 class LaravelServiceProviderTestCaseStub extends LaravelServiceProviderTestCase
 {
     /**

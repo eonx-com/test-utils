@@ -37,7 +37,7 @@ class BaseStubStub extends BaseStub
      */
     public function badReturn()
     {
-        return $this->returnOrThrowResponse('_not_defined');
+        return $this->doStubCall('_not_defined');
     }
 
     /**
@@ -51,9 +51,7 @@ class BaseStubStub extends BaseStub
      */
     public function example(string $arg): ?string
     {
-        $this->saveCalls(__FUNCTION__, \get_defined_vars());
-
-        return $this->returnOrThrowResponse(__FUNCTION__);
+        return $this->doStubCall(__FUNCTION__, \get_defined_vars());
     }
 
     /**
@@ -63,11 +61,11 @@ class BaseStubStub extends BaseStub
      * @param int $arg2
      *
      * @return float
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter) Not unused
      */
     public function callable(string $arg1, int $arg2): float
     {
-        $this->saveCalls(__FUNCTION__, \get_defined_vars());
-
-        return $this->returnOrThrowResponse(__FUNCTION__, null, \func_get_args());
+        return $this->doStubCall(__FUNCTION__, \get_defined_vars());
     }
 }

@@ -65,17 +65,6 @@ class EntityManagerStubTest extends StubTestCase
             'return' => false
         ];
 
-        $stdClass = new stdClass();
-
-        yield 'copy' => [
-            'method' => 'copy',
-            'args' => [
-                'object' => $stdClass,
-                'deep' => false
-            ],
-            'return' => $stdClass
-        ];
-
         yield 'createNamedNativeQuery' => [
             'method' => 'createNamedNativeQuery',
             'args' => ['name' => 'name'],
@@ -248,6 +237,8 @@ class EntityManagerStubTest extends StubTestCase
             'return' => null
         ];
 
+        $stdClass = new stdClass();
+
         yield 'merge' => [
             'method' => 'merge',
             'args' => [
@@ -292,5 +283,21 @@ class EntityManagerStubTest extends StubTestCase
     public function getStubClass(): string
     {
         return EntityManagerStub::class;
+    }
+
+    /**
+     * Tests that copy returns a new object.
+     *
+     * @return void
+     */
+    public function testCopy(): void
+    {
+        $stub = new EntityManagerStub();
+
+        $stdClass = new stdClass();
+
+        $result = $stub->copy($stdClass);
+
+        self::assertNotSame($stdClass, $result);
     }
 }
