@@ -101,18 +101,18 @@ abstract class BaseStub
      *      $this->doStubCall(__FUNCTION__, \get_defined_vars(), null);
      *
      * @param string $method The method name to save data against.
-     * @param mixed[] $args A key/value array of parameter names and their values.
+     * @param mixed[]|null $args A key/value array of parameter names and their values.
      * @param mixed $default
      *
      * @return mixed
      *
      * @noinspection ParameterDefaultValueIsNotNullInspection
      */
-    protected function doStubCall(string $method, array $args, $default = self::NOT_PROVIDED)
+    protected function doStubCall(string $method, ?array $args = null, $default = self::NOT_PROVIDED)
     {
         $this->calls[$method][] = $args;
 
-        return $this->handleResponse($method, $args, $default);
+        return $this->handleResponse($method, $args ?? [], $default);
     }
 
     /**
