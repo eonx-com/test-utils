@@ -16,7 +16,7 @@ class CodeCoverageValidatorStub extends BaseStub implements CodeCoverageValidato
      */
     public function findFilesWithoutCovers(string $basePath): array
     {
-        $this->saveCalls(__FUNCTION__, \get_defined_vars());
+        $this->doStubCall(__FUNCTION__, \get_defined_vars());
 
         return $this->returnOrThrowResponse(__FUNCTION__);
     }

@@ -93,77 +93,62 @@ abstract class BaseStub
     }
 
     /**
-     * Return the next item queued for response. If there is no response configured
-     * but a default is provided, it will be returned instead.
+     * Performs a stub call - recording the fact the method was called with args and
+     * then returning or throwing a value. This method will work fine for void return
+     * methods where you still call this method but do not return its value.
      *
-     * This can be called with the following snippet:
-     *      return $this->returnOrThrowResponse(__FUNCTION__, 'defaultValue');
+     * This can be called with the following snippet as the first line in the method:
+     *      $this->doStubCall(__FUNCTION__, \get_defined_vars(), null);
      *
-     * @param string $method The name of the original method to return the response for.
+     * @param string $method The method name to save data against.
+     * @param mixed[] $args A key/value array of parameter names and their values.
+     * @param mixed $default
+     *
+     * @return mixed
+     *
+     * @noinspection ParameterDefaultValueIsNotNullInspection
+     */
+    protected function doStubCall(string $method, array $args, $default = self::NOT_PROVIDED)
+    {
+        $this->calls[$method][] = $args;
+
+        return $this->handleResponse($method, $args, $default);
+    }
+
+    /**
+     * Previous legacy method.
+     *
+     * @param string $method
      * @param mixed $default
      * @param mixed[]|null $methodArgs
      *
-     * @return mixed A preprogrammed response.
+     * @return mixed
      *
-     * @noinspection ParameterDefaultValueIsNotNullInspection Non null default is required to operate
+     * @deprecated use doStubCall() instead.
+     *
+     * @noinspection ParameterDefaultValueIsNotNullInspection
      */
     protected function returnOrThrowResponse(
         string $method,
         $default = self::NOT_PROVIDED,
         ?array $methodArgs = null
     ) {
-        $response = $this->getResponseFor($method, $default);
-
-        // If we got a callable and we were passed the method args, call it and
-        // return its value.
-        if (\is_callable($response) === true && \is_array($methodArgs) === true) {
-            return \call_user_func_array($response, $methodArgs);
-        }
-
-        // If the response is throwable, we're going to throw it instead.
-        if ($response instanceof Throwable === true) {
-            throw $response;
-        }
-
-        // If we got here, and the response is still NOT_PROVIDED we'll return a null.
-        return $response === self::NOT_PROVIDED
-            ? null
-            : $response;
+        return $this->handleResponse($method, $methodArgs ?? [], $default);
     }
 
     /**
-     * Save all calls made to this method.
-     *
-     * This can be called with the following snippet as the first line in the method:
-     *      $this->saveCalls(__FUNCTION__, \get_defined_vars());
-     *
-     * @param string $method The method name to save data against.
-     * @param mixed[] $args A key/value array of parameter names and their values.
-     *
-     * @return void
-     */
-    protected function saveCalls(string $method, array $args): void
-    {
-        $this->calls[$method][] = $args;
-    }
-
-    /**
-     * Call this method when a stub's method is a void return but you still want
-     * that method to have a configurable exception thrown.
-     *
-     * This can be called with the following snippet as the first line in the method:
-     *      $this->saveCalls(__FUNCTION__, \get_defined_vars());
+     * Previous method, legacy.
      *
      * @param string $method
      * @param mixed[] $args
      *
      * @return void
+     *
+     * @deprecated use doStubCall() instead.
      */
-    protected function saveCallsAndThrow(string $method, array $args): void
+    protected function saveCalls(string $method, array $args): void
     {
-        $this->saveCalls($method, $args);
-
-        $this->returnOrThrowResponse($method, null, \array_values($args));
+        $this->calls[$method][] = $args;
     }
 
     /**
@@ -201,5 +186,35 @@ abstract class BaseStub
 
         // If we got here, the response for $method is a non array value, return it as is.
         return $this->responses[$method];
+    }
+
+    /**
+     * Resolves a response if one exists and throws or returns it.
+     *
+     * @param string $method
+     * @param mixed[] $args
+     * @param mixed $default
+     *
+     * @return mixed
+     */
+    private function handleResponse(string $method, array $args, $default)
+    {
+        $response = $this->getResponseFor($method, $default);
+
+        // If we got a callable and we were passed the method args, call it to resolve the
+        // response.
+        if (\is_callable($response) === true) {
+            $response = \call_user_func_array($response, $args);
+        }
+
+        // If the response is throwable, we're going to throw it instead.
+        if ($response instanceof Throwable === true) {
+            throw $response;
+        }
+
+        // If we got here, and the response is still NOT_PROVIDED we'll return a null.
+        return $response === self::NOT_PROVIDED
+            ? null
+            : $response;
     }
 }

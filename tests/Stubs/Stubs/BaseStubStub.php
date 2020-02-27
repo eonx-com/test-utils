@@ -51,7 +51,7 @@ class BaseStubStub extends BaseStub
      */
     public function example(string $arg): ?string
     {
-        $this->saveCalls(__FUNCTION__, \get_defined_vars());
+        $this->doStubCall(__FUNCTION__, \get_defined_vars());
 
         return $this->returnOrThrowResponse(__FUNCTION__);
     }
@@ -66,7 +66,7 @@ class BaseStubStub extends BaseStub
      */
     public function callable(string $arg1, int $arg2): float
     {
-        $this->saveCalls(__FUNCTION__, \get_defined_vars());
+        $this->doStubCall(__FUNCTION__, \get_defined_vars());
 
         return $this->returnOrThrowResponse(__FUNCTION__, null, \func_get_args());
     }

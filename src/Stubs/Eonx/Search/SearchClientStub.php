@@ -17,7 +17,7 @@ final class SearchClientStub extends BaseStub implements ClientStubInterface
      */
     public function bulk(array $actions): void
     {
-        $this->saveCalls(__FUNCTION__, \get_defined_vars());
+        $this->doStubCall(__FUNCTION__, \get_defined_vars(), null);
     }
 
     /**
@@ -25,9 +25,7 @@ final class SearchClientStub extends BaseStub implements ClientStubInterface
      */
     public function count(string $index): int
     {
-        $this->saveCalls(__FUNCTION__, \get_defined_vars());
-
-        return $this->returnOrThrowResponse(__FUNCTION__, 0);
+        return $this->doStubCall(__FUNCTION__, \get_defined_vars(), 0);
     }
 
     /**
@@ -35,7 +33,7 @@ final class SearchClientStub extends BaseStub implements ClientStubInterface
      */
     public function createAlias(string $indexName, string $aliasName): void
     {
-        $this->saveCalls(__FUNCTION__, \get_defined_vars());
+        $this->doStubCall(__FUNCTION__, \get_defined_vars(), null);
     }
 
     /**
@@ -43,7 +41,7 @@ final class SearchClientStub extends BaseStub implements ClientStubInterface
      */
     public function createIndex(string $name, ?array $mappings = null, ?array $settings = null): void
     {
-        $this->saveCalls(__FUNCTION__, \get_defined_vars());
+        $this->doStubCall(__FUNCTION__, \get_defined_vars(), null);
     }
 
     /**
@@ -51,7 +49,7 @@ final class SearchClientStub extends BaseStub implements ClientStubInterface
      */
     public function deleteAlias(array $aliases): void
     {
-        $this->saveCalls(__FUNCTION__, \get_defined_vars());
+        $this->doStubCall(__FUNCTION__, \get_defined_vars(), null);
     }
 
     /**
@@ -59,7 +57,7 @@ final class SearchClientStub extends BaseStub implements ClientStubInterface
      */
     public function deleteIndex(string $name): void
     {
-        $this->saveCalls(__FUNCTION__, \get_defined_vars());
+        $this->doStubCall(__FUNCTION__, \get_defined_vars(), null);
     }
 
     /**
@@ -67,9 +65,7 @@ final class SearchClientStub extends BaseStub implements ClientStubInterface
      */
     public function getAliases(?string $name = null): array
     {
-        $this->saveCalls(__FUNCTION__, \get_defined_vars());
-
-        return $this->returnOrThrowResponse(__FUNCTION__, []);
+        return $this->doStubCall(__FUNCTION__, \get_defined_vars(), []);
     }
 
     /**
@@ -91,7 +87,7 @@ final class SearchClientStub extends BaseStub implements ClientStubInterface
      */
     public function getHealth(): ClusterHealth
     {
-        return $this->returnOrThrowResponse(__FUNCTION__, new ClusterHealth([]));
+        return $this->doStubCall(__FUNCTION__, [], new ClusterHealth([]));
     }
 
     /**
@@ -99,9 +95,7 @@ final class SearchClientStub extends BaseStub implements ClientStubInterface
      */
     public function getIndices(?string $name = null): array
     {
-        $this->saveCalls(__FUNCTION__, \get_defined_vars());
-
-        return $this->returnOrThrowResponse(__FUNCTION__, []);
+        return $this->doStubCall(__FUNCTION__, \get_defined_vars(), []);
     }
 
     /**
@@ -109,9 +103,7 @@ final class SearchClientStub extends BaseStub implements ClientStubInterface
      */
     public function isAlias(string $name): bool
     {
-        $this->saveCalls(__FUNCTION__, \get_defined_vars());
-
-        return $this->returnOrThrowResponse(__FUNCTION__, false);
+        return $this->doStubCall(__FUNCTION__, \get_defined_vars(), false);
     }
 
     /**
@@ -119,9 +111,7 @@ final class SearchClientStub extends BaseStub implements ClientStubInterface
      */
     public function isIndex(string $name): bool
     {
-        $this->saveCalls(__FUNCTION__, \get_defined_vars());
-
-        return $this->returnOrThrowResponse(__FUNCTION__, false);
+        return $this->doStubCall(__FUNCTION__, \get_defined_vars(), false);
     }
 
     /**
@@ -129,6 +119,6 @@ final class SearchClientStub extends BaseStub implements ClientStubInterface
      */
     public function moveAlias(array $aliases): void
     {
-        $this->saveCalls(__FUNCTION__, \get_defined_vars());
+        $this->doStubCall(__FUNCTION__, \get_defined_vars(), null);
     }
 }
