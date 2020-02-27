@@ -8,6 +8,9 @@ use Eonx\TestUtils\Helpers\Interfaces\ApplyFuzzinessInterface;
 use Illuminate\Support\ServiceProvider;
 use stdClass;
 
+/**
+ * @coversNothing
+ */
 class ServiceProviderStub extends ServiceProvider
 {
     /**
