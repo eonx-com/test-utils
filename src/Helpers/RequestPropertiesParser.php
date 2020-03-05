@@ -5,34 +5,39 @@ namespace Eonx\TestUtils\Helpers;
 
 use Eonx\TestUtils\Helpers\Interfaces\RequestPropertiesParserInterface;
 use LoyaltyCorp\RequestHandlers\Request\RequestObjectInterface;
+use ReflectionClass;
+use ReflectionMethod;
 
 class RequestPropertiesParser implements RequestPropertiesParserInterface
 {
     /**
      * {@inheritdoc}
+     *
+     * @throws \ReflectionException
      */
     public function get(RequestObjectInterface $object): array
     {
-        $interfaceMethods = \get_class_methods(RequestObjectInterface::class);
-        $instanceMethods = \get_class_methods($object);
-
-        $instanceOnlyMethods = \array_diff($instanceMethods, $interfaceMethods);
-        $retrieveMethods = \array_merge(
-            $this->getMethodsByPrefix($instanceOnlyMethods, 'get'),
-            $this->getMethodsByPrefix($instanceOnlyMethods, 'is')
-        );
+        $reflClass = new ReflectionClass($object);
 
         $actual = [];
-        foreach ($retrieveMethods as $method => $property) {
-            $callable = [$object, $method];
-            if (\is_callable($callable) === false) {
-                // @codeCoverageIgnoreStart
-                // Unable to be tested. get_class_methods returns only public methods
+
+        foreach ($reflClass->getMethods(ReflectionMethod::IS_PUBLIC) as $method) {
+            // Static methods are not used for request property comparisons and
+            // if the method is defined on RequestObjectInterface it isnt called
+            // either.
+            if ($method->isStatic() === true ||
+                $method->getDeclaringClass()->getName() === RequestObjectInterface::class) {
                 continue;
-                // @codeCoverageIgnoreEnd
             }
 
-            $value = $callable();
+            if (\preg_match('/(is|get)(.*)/', $method->getName(), $matches) !== 1 ||
+                ($matches[2] ?? null) === null) {
+                continue;
+            }
+
+            $property = \lcfirst($matches[2]);
+
+            $value = $method->invoke($object);
 
             // If we got another request object, convert it into an array as well.
             if ($value instanceof RequestObjectInterface === true) {
@@ -54,25 +59,5 @@ class RequestPropertiesParser implements RequestPropertiesParserInterface
         }
 
         return $actual;
-    }
-
-    /**
-     * Get list of methods that have the provided prefix.
-     *
-     * @param string[] $methods List of methods to look up.
-     * @param string $prefix Prefix to look for, eg 'get'.
-     *
-     * @return string[] Map of method to matching property name. eg; 'getFoo' => 'foo'
-     */
-    private function getMethodsByPrefix(array $methods, string $prefix): array
-    {
-        $response = [];
-        foreach ($methods as $method) {
-            if (\strncmp($method, $prefix, \strlen($prefix)) === 0) {
-                $response[$method] = \lcfirst(\substr($method, \strlen($prefix)));
-            }
-        }
-
-        return $response;
     }
 }
