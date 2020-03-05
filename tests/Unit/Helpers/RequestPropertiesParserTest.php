@@ -22,15 +22,25 @@ class RequestPropertiesParserTest extends UnitTestCase
         $object = new TestRequestStub(
             true,
             'test',
-            new TestRequestStub(false, 'deeper')
+            new TestRequestStub(false, 'deeper'),
+            [new TestRequestStub(false, 'deeper2')]
         );
 
         // get's are processed before is's, thus they up on list.
         $expected = [
             'deeper' => [
                 'deeper' => null,
+                'evenDeeper' => [],
                 'name' => 'deeper',
                 'active' => false
+            ],
+            'evenDeeper' => [
+                [
+                    'deeper' => null,
+                    'evenDeeper' => [],
+                    'name' => 'deeper2',
+                    'active' => false
+                ]
             ],
             'name' => 'test',
             'active' => true,

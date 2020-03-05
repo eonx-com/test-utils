@@ -27,6 +27,13 @@ class TestRequestStub implements RequestObjectInterface
     private $deeper;
 
     /**
+     * @Assert\Type("array")
+     *
+     * @var \Tests\Eonx\TestUtils\Stubs\Helpers\RequestObjects\TestRequestStub[]|null
+     */
+    private $evenDeeper;
+
+    /**
      * @Assert\Type("string")
      *
      * @var string
@@ -39,12 +46,18 @@ class TestRequestStub implements RequestObjectInterface
      * @param bool $active
      * @param string $name
      * @param null|\Tests\Eonx\TestUtils\Stubs\Helpers\RequestObjects\TestRequestStub $deeper
+     * @param \Tests\Eonx\TestUtils\Stubs\Helpers\RequestObjects\TestRequestStub[]|null $evenDeeper
      */
-    public function __construct(bool $active, string $name, ?TestRequestStub $deeper = null)
-    {
+    public function __construct(
+        bool $active,
+        string $name,
+        ?TestRequestStub $deeper = null,
+        ?array $evenDeeper = null
+    ) {
         $this->active = $active;
-        $this->name = $name;
         $this->deeper = $deeper;
+        $this->evenDeeper = $evenDeeper;
+        $this->name = $name;
     }
 
     /**
@@ -63,6 +76,16 @@ class TestRequestStub implements RequestObjectInterface
     public function getDeeper(): ?TestRequestStub
     {
         return $this->deeper;
+    }
+
+    /**
+     * Returns even deeper.
+     *
+     * @return \Tests\Eonx\TestUtils\Stubs\Helpers\RequestObjects\TestRequestStub[]
+     */
+    public function getEvenDeeper(): array
+    {
+        return $this->evenDeeper ?? [];
     }
 
     /**

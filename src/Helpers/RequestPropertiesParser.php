@@ -39,6 +39,17 @@ class RequestPropertiesParser implements RequestPropertiesParserInterface
                 $value = $this->get($value);
             }
 
+            // If we got an array, try find any request objects in there too.
+            if (\is_array($value) === true) {
+                $value = \array_map(function ($value) {
+                    if ($value instanceof RequestObjectInterface === true) {
+                        return $this->get($value);
+                    }
+
+                    return $value;
+                }, $value);
+            }
+
             $actual[$property] = $value;
         }
 
