@@ -62,7 +62,7 @@ abstract class LaravelServiceProviderTestCase extends UnitTestCase
 
                 // Ignore facades bound to strings
                 if (\strncmp($reflected->name, 'Illuminate\\Support\\Facades', 26) === 0) {
-                    continue;
+                    continue; // @codeCoverageIgnore
                 }
 
                 self::assertInstanceOf(
