@@ -20,6 +20,13 @@ class TestRequestStub implements RequestObjectInterface
     private $active;
 
     /**
+     * @Assert\Type("Tests\Eonx\TestUtils\Stubs\Helpers\RequestObjects\TestRequestStub")
+     *
+     * @var \Tests\Eonx\TestUtils\Stubs\Helpers\RequestObjects\TestRequestStub|null
+     */
+    private $deeper;
+
+    /**
      * @Assert\Type("string")
      *
      * @var string
@@ -31,11 +38,13 @@ class TestRequestStub implements RequestObjectInterface
      *
      * @param bool $active
      * @param string $name
+     * @param null|\Tests\Eonx\TestUtils\Stubs\Helpers\RequestObjects\TestRequestStub $deeper
      */
-    public function __construct(bool $active, string $name)
+    public function __construct(bool $active, string $name, ?TestRequestStub $deeper = null)
     {
         $this->active = $active;
         $this->name = $name;
+        $this->deeper = $deeper;
     }
 
     /**
@@ -44,6 +53,16 @@ class TestRequestStub implements RequestObjectInterface
     public static function getExceptionClass(): string
     {
         return RequestValidationExceptionStub::class;
+    }
+
+    /**
+     * Returns deeper.
+     *
+     * @return \Tests\Eonx\TestUtils\Stubs\Helpers\RequestObjects\TestRequestStub|null
+     */
+    public function getDeeper(): ?TestRequestStub
+    {
+        return $this->deeper;
     }
 
     /**

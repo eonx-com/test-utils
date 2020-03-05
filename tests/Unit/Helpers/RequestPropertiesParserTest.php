@@ -19,12 +19,21 @@ class RequestPropertiesParserTest extends UnitTestCase
      */
     public function testGetRequestProperties(): void
     {
-        $object = new TestRequestStub(true, 'test');
+        $object = new TestRequestStub(
+            true,
+            'test',
+            new TestRequestStub(false, 'deeper')
+        );
 
         // get's are processed before is's, thus they up on list.
         $expected = [
+            'deeper' => [
+                'deeper' => null,
+                'name' => 'deeper',
+                'active' => false
+            ],
             'name' => 'test',
-            'active' => true
+            'active' => true,
         ];
 
         $helper = new RequestPropertiesParser();

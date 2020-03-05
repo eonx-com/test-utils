@@ -32,7 +32,14 @@ class RequestPropertiesParser implements RequestPropertiesParserInterface
                 // @codeCoverageIgnoreEnd
             }
 
-            $actual[$property] = $callable();
+            $value = $callable();
+
+            // If we got another request object, convert it into an array as well.
+            if ($value instanceof RequestObjectInterface === true) {
+                $value = $this->get($value);
+            }
+
+            $actual[$property] = $value;
         }
 
         return $actual;
