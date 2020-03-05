@@ -30,7 +30,12 @@ class AssertRequestPropertiesTest extends UnitTestCase
 
         yield 'When expected matches request object.' => [
             'object' => new TestRequestStub(true, 'John'),
-            'expected' => ['name' => 'John', 'active' => true],
+            'expected' => [
+                'deeper' => null,
+                'evenDeeper' => [],
+                'name' => 'John',
+                'active' => true,
+            ],
             'exception' => null
         ];
     }

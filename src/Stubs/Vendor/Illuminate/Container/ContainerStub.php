@@ -5,6 +5,9 @@ namespace Eonx\TestUtils\Stubs\Vendor\Illuminate\Container;
 
 use Illuminate\Container\Container;
 
+/**
+ * @codeCoverageIgnore
+ */
 class ContainerStub extends Container
 {
     /**

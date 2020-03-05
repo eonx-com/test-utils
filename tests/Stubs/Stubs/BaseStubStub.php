@@ -7,29 +7,11 @@ use Eonx\TestUtils\Stubs\BaseStub;
 
 /**
  * @coversNothing
+ *
+ * @SuppressWarnings(PHPMD.ExcessivePublicCount)
  */
 class BaseStubStub extends BaseStub
 {
-    /**
-     * Returns calls to example().
-     *
-     * @return mixed[]
-     */
-    public function getExampleCalls(): array
-    {
-        return $this->getCalls('example');
-    }
-
-    /**
-     * Badly configured get calls method.
-     *
-     * @return mixed[]
-     */
-    public function getBadness(): array
-    {
-        return $this->getCalls('badness');
-    }
-
     /**
      * A method that will have no configured responses.
      *
@@ -38,6 +20,33 @@ class BaseStubStub extends BaseStub
     public function badReturn()
     {
         return $this->doStubCall('_not_defined');
+    }
+
+    /**
+     * Test for a callable response.
+     *
+     * @param string $arg1
+     * @param int $arg2
+     *
+     * @return float
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter) Not unused
+     */
+    public function callable(string $arg1, int $arg2): float
+    {
+        return $this->doStubCall(__FUNCTION__, \get_defined_vars());
+    }
+
+    /**
+     * Test default value.
+     *
+     * @return string
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter) Not unused
+     */
+    public function defaultVal(): string
+    {
+        return $this->doStubCall(__FUNCTION__, \get_defined_vars(), 'string');
     }
 
     /**
@@ -55,17 +64,22 @@ class BaseStubStub extends BaseStub
     }
 
     /**
-     * Test for a callable response.
+     * Badly configured get calls method.
      *
-     * @param string $arg1
-     * @param int $arg2
-     *
-     * @return float
-     *
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter) Not unused
+     * @return mixed[]
      */
-    public function callable(string $arg1, int $arg2): float
+    public function getBadness(): array
     {
-        return $this->doStubCall(__FUNCTION__, \get_defined_vars());
+        return $this->getCalls('badness');
+    }
+
+    /**
+     * Returns calls to example().
+     *
+     * @return mixed[]
+     */
+    public function getExampleCalls(): array
+    {
+        return $this->getCalls('example');
     }
 }

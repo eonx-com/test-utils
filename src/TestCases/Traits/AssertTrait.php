@@ -205,7 +205,9 @@ trait AssertTrait
                 $response->getStatusCode()
             )
         );
+        // @codeCoverageIgnoreStart coverage artifact
     }
+    // @codeCoverageIgnoreEnd
 
     /**
      * Asserts that the response was not an exception.

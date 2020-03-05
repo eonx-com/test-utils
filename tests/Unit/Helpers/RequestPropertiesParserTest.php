@@ -16,6 +16,8 @@ class RequestPropertiesParserTest extends UnitTestCase
      * Test getting request properties into an array.
      *
      * @return void
+     *
+     * @throws \ReflectionException
      */
     public function testGetRequestProperties(): void
     {

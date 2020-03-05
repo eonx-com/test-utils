@@ -6,15 +6,93 @@ namespace Tests\Eonx\TestUtils\Unit\Stubs;
 use Eonx\TestUtils\Exceptions\Stubs\NoResponsesConfiguredException;
 use Eonx\TestUtils\TestCases\UnitTestCase;
 use Exception;
+use RuntimeException;
 use Tests\Eonx\TestUtils\Stubs\Stubs\BaseStubStub;
 
 /**
  * @covers \Eonx\TestUtils\Stubs\BaseStub
  *
- * @SuppressWarnings(PHPMD.EmptyCatchBlock) Required to test
+ * @SuppressWarnings(PHPMD) Required to test
  */
 class BaseStubTest extends UnitTestCase
 {
+    /**
+     * Tests that the default value for doStubCall works.
+     *
+     * @return void
+     */
+    public function testDefaultValue(): void
+    {
+        $stub = new BaseStubStub();
+
+        $result = $stub->defaultVal();
+
+        self::assertSame('string', $result);
+    }
+
+    /**
+     * Tests that the default value for doStubCall works.
+     *
+     * @return void
+     */
+    public function testNullArrayValue(): void
+    {
+        $stub = new BaseStubStub([
+            'example' => [null]
+        ]);
+
+        $result = $stub->example('string');
+
+        self::assertNull($result);
+    }
+
+    /**
+     * Tests that the default value for doStubCall works.
+     *
+     * @return void
+     */
+    public function testEmptyResponses(): void
+    {
+        $stub = new BaseStubStub([
+            'example' => []
+        ]);
+
+        $this->expectException(NoResponsesConfiguredException::class);
+        $this->expectExceptionMessage('No responses found in stub for method "Tests\Eonx\TestUtils\Stubs\Stubs\BaseStubStub::example"'); // phpcs:ignore
+
+        $stub->example('string');
+    }
+
+    /**
+     * Tests that a non existant method to getCalls() throws.
+     *
+     * @return void
+     */
+    public function testGetCallBadMethod(): void
+    {
+        $stub = new BaseStubStub();
+
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Method "purple" does not exist on this stub.');
+
+        $stub->getCalls('purple');
+    }
+
+    /**
+     * Tests a callable response
+     *
+     * @return void
+     */
+    public function testMethodMissing(): void
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('The method "nonExistantMethod" does not exist on "Tests\Eonx\TestUtils\Stubs\Stubs\BaseStubStub" and cannot have responses configured.'); // phpcs:ignore
+
+        new BaseStubStub([
+            'nonExistantMethod' => 'out'
+        ]);
+    }
+
     /**
      * Tests an incorrectly configured get<Method>Calls function.
      *
@@ -28,6 +106,22 @@ class BaseStubTest extends UnitTestCase
         $this->expectExceptionMessage('No responses found in stub for method "Tests\Eonx\TestUtils\Stubs\Stubs\BaseStubStub::example"'); // phpcs:ignore
 
         $stub->example('arg');
+    }
+
+    /**
+     * Tests an incorrectly configured get<Method>Calls function.
+     *
+     * @return void
+     */
+    public function testNoDefaultNoResolvedValue(): void
+    {
+        $stub = new BaseStubStub([
+            'example' => null
+        ]);
+
+        $result = $stub->example('arg');
+
+        self::assertNull($result);
     }
 
     /**

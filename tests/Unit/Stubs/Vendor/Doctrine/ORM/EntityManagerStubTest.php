@@ -263,6 +263,14 @@ class EntityManagerStubTest extends StubTestCase
             'return' => null
         ];
 
+        yield 'refresh' => [
+            'method' => 'refresh',
+            'args' => [
+                'object' => $stdClass
+            ],
+            'return' => null
+        ];
+
         yield 'rollback' => [
             'method' => 'rollback',
             'args' => [],

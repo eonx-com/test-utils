@@ -8,6 +8,12 @@ parameters:
             message: '#Method .* return type has no value type specified in iterable type .*\.#'
             path: tests/Stubs
         -
+            message: '#Method .* return type has no value type specified in iterable type .*\.#'
+            path: src/Stubs
+        -
+            message: '#Method .* has parameter .* with no value type specified in iterable type .*\.#'
+            path: src/Stubs
+        -
             message: '#.*#'
             path: tests/Stubs/Vendor/Symfony/Validator/ConstraintViolationListNoToStringStub.php
         -
