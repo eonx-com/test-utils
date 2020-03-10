@@ -8,6 +8,8 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @coversNothing
+ *
+ * @SuppressWarnings(PHPMD.ShortVariable)
  */
 class TranslatorStub extends BaseStub implements TranslatorInterface
 {
