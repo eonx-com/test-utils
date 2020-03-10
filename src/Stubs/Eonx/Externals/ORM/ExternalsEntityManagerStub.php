@@ -26,7 +26,7 @@ final class ExternalsEntityManagerStub extends BaseStub implements EntityManager
      */
     public function flush(): void
     {
-        $this->doStubCall(__FUNCTION__, \get_defined_vars(), null);
+        $this->doStubCall(__FUNCTION__, \get_defined_vars());
     }
 
     /**
@@ -42,7 +42,7 @@ final class ExternalsEntityManagerStub extends BaseStub implements EntityManager
      */
     public function getRepository(string $class)
     {
-        return $this->doStubCall(__FUNCTION__, \get_defined_vars(), null);
+        return $this->doStubCall(__FUNCTION__, \get_defined_vars());
     }
 
     /**
@@ -50,7 +50,7 @@ final class ExternalsEntityManagerStub extends BaseStub implements EntityManager
      */
     public function merge(EntityInterface $entity): void
     {
-        $this->doStubCall(__FUNCTION__, \get_defined_vars(), null);
+        $this->doStubCall(__FUNCTION__, \get_defined_vars());
     }
 
     /**
@@ -58,7 +58,7 @@ final class ExternalsEntityManagerStub extends BaseStub implements EntityManager
      */
     public function persist(EntityInterface $entity): void
     {
-        $this->doStubCall(__FUNCTION__, \get_defined_vars(), null);
+        $this->doStubCall(__FUNCTION__, \get_defined_vars());
     }
 
     /**
@@ -66,6 +66,6 @@ final class ExternalsEntityManagerStub extends BaseStub implements EntityManager
      */
     public function remove(EntityInterface $entity): void
     {
-        $this->doStubCall(__FUNCTION__, \get_defined_vars(), null);
+        $this->doStubCall(__FUNCTION__, \get_defined_vars());
     }
 }
