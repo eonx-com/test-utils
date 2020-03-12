@@ -11,6 +11,8 @@ use Throwable;
  * Base class creating stubs with spy behaviour.
  *
  * @coversNothing
+ *
+ * @SuppressWarnings(PHPMD.CamelCaseMethodName) _getResponseFor is intentionally prefixed
  */
 abstract class BaseStub
 {
@@ -101,6 +103,37 @@ abstract class BaseStub
     }
 
     /**
+     * Finds a response to use for the method.
+     *
+     * @param string $method
+     * @param mixed[] $args
+     * @param mixed $default
+     *
+     * @return mixed
+     *
+     * @noinspection PhpMethodNamingConventionInspection
+     */
+    protected function _getResponseFor(string $method, array $args, $default) // phpcs:ignore
+    {
+        // If we dont have a response configured, we have a default - lets return it.
+        if (\array_key_exists($method, $this->responses) === false) {
+            return $default;
+        }
+
+        // If we have an array, assume it is a stack of responses and shift the first
+        // response to be returned. If it is an empty array, return the default value.
+        if (\is_array($this->responses[$method]) === true) {
+            // If there is no responses configured, return the default.
+            return \count($this->responses[$method]) === 0
+                ? $default
+                : \array_shift($this->responses[$method]);
+        }
+
+        // If we got here, the response for $method is a non array value, return it as is.
+        return $this->responses[$method];
+    }
+
+    /**
      * Performs a stub call - recording the fact the method was called with args and
      * then returning or throwing a value. This method will work fine for void return
      * methods where you still call this method but do not return its value.
@@ -164,36 +197,6 @@ abstract class BaseStub
     }
 
     /**
-     * Finds a response to use for the method.
-     *
-     * @param string $method
-     * @param mixed $default
-     *
-     * @return mixed
-     */
-    private function getResponseFor(string $method, $default)
-    {
-        // If we dont have a response configured, we have a default - lets return it.
-        if (\array_key_exists($method, $this->responses) === false) {
-            return $default;
-        }
-
-        // If we have an array, assume it is a stack of responses and shift the first
-        // response to be returned. If it is an empty array, return the default value.
-        if (\is_array($this->responses[$method]) === true) {
-            // We dont have any values, return default.
-            if (\count($this->responses[$method]) === 0) {
-                return $default;
-            }
-
-            return \array_shift($this->responses[$method]);
-        }
-
-        // If we got here, the response for $method is a non array value, return it as is.
-        return $this->responses[$method];
-    }
-
-    /**
      * Resolves a response if one exists and throws or returns it.
      *
      * @param string $method
@@ -204,7 +207,7 @@ abstract class BaseStub
      */
     private function handleResponse(string $method, array $args, $default)
     {
-        $response = $this->getResponseFor($method, $default);
+        $response = $this->_getResponseFor($method, $args, $default);
 
         // If we got a callable and we were passed the method args, call it to resolve the
         // response.
