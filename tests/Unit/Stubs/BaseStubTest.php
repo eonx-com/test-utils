@@ -7,6 +7,7 @@ use Eonx\TestUtils\Exceptions\Stubs\NoResponsesConfiguredException;
 use Eonx\TestUtils\TestCases\UnitTestCase;
 use Exception;
 use RuntimeException;
+use Tests\Eonx\TestUtils\Stubs\Stubs\BaseStubCustomisableResponseStub;
 use Tests\Eonx\TestUtils\Stubs\Stubs\BaseStubStub;
 
 /**
@@ -16,6 +17,20 @@ use Tests\Eonx\TestUtils\Stubs\Stubs\BaseStubStub;
  */
 class BaseStubTest extends UnitTestCase
 {
+    /**
+     * Tests that we can customise response resolution.
+     *
+     * @return void
+     */
+    public function testCustomisableResponses(): void
+    {
+        $stub = new BaseStubCustomisableResponseStub();
+
+        $result = $stub->example('return should be this');
+
+        self::assertSame('return should be this', $result);
+    }
+
     /**
      * Tests that the default value for doStubCall works.
      *
@@ -28,22 +43,6 @@ class BaseStubTest extends UnitTestCase
         $result = $stub->defaultVal();
 
         self::assertSame('string', $result);
-    }
-
-    /**
-     * Tests that the default value for doStubCall works.
-     *
-     * @return void
-     */
-    public function testNullArrayValue(): void
-    {
-        $stub = new BaseStubStub([
-            'example' => [null]
-        ]);
-
-        $result = $stub->example('string');
-
-        self::assertNull($result);
     }
 
     /**
@@ -98,6 +97,22 @@ class BaseStubTest extends UnitTestCase
      *
      * @return void
      */
+    public function testNoDefaultNoResolvedValue(): void
+    {
+        $stub = new BaseStubStub([
+            'example' => null
+        ]);
+
+        $result = $stub->example('arg');
+
+        self::assertNull($result);
+    }
+
+    /**
+     * Tests an incorrectly configured get<Method>Calls function.
+     *
+     * @return void
+     */
     public function testNoResponesConfigured(): void
     {
         $stub = new BaseStubStub();
@@ -109,17 +124,17 @@ class BaseStubTest extends UnitTestCase
     }
 
     /**
-     * Tests an incorrectly configured get<Method>Calls function.
+     * Tests that the default value for doStubCall works.
      *
      * @return void
      */
-    public function testNoDefaultNoResolvedValue(): void
+    public function testNullArrayValue(): void
     {
         $stub = new BaseStubStub([
-            'example' => null
+            'example' => [null]
         ]);
 
-        $result = $stub->example('arg');
+        $result = $stub->example('string');
 
         self::assertNull($result);
     }
