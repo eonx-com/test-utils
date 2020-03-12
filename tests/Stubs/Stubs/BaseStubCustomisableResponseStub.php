@@ -9,6 +9,7 @@ use Eonx\TestUtils\Stubs\BaseStub;
  * @coversNothing
  *
  * @SuppressWarnings(PHPMD.ExcessivePublicCount)
+ * @SuppressWarnings(PHPMD.CamelCaseMethodName) _getResponseFor is intentionally prefixed
  */
 class BaseStubCustomisableResponseStub extends BaseStub
 {

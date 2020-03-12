@@ -11,6 +11,8 @@ use Throwable;
  * Base class creating stubs with spy behaviour.
  *
  * @coversNothing
+ *
+ * @SuppressWarnings(PHPMD.CamelCaseMethodName) _getResponseFor is intentionally prefixed
  */
 abstract class BaseStub
 {
