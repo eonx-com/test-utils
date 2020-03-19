@@ -6,7 +6,6 @@ namespace Tests\Eonx\TestUtils\Unit\TestCases\UnitTestCase;
 use Eonx\TestUtils\TestCases\UnitTestCase;
 use PHPUnit\Framework\AssertionFailedError;
 use PHPUnit\Framework\ExpectationFailedException;
-use SebastianBergmann\Comparator\ComparisonFailure;
 
 /**
  * @covers \Eonx\TestUtils\TestCases\UnitTestCase::assertJsonEqualsStringFuzzily
