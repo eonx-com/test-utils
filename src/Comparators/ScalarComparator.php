@@ -15,12 +15,9 @@ class ScalarComparator extends BaseScalarComparator
     /**
      * {@inheritdoc}
      */
-    public function assertEquals($expected, $actual, $delta = 0.0, $canonicalize = false, $ignoreCase = false)
+    public function assertEquals($expected, $actual, $delta = null, $canonicalize = null, $ignoreCase = null): void
     {
-        $expectedToCompare = $expected;
-        $actualToCompare   = $actual;
-
-        if ($expectedToCompare !== $actualToCompare) {
+        if ($expected !== $actual) {
             throw new ComparisonFailure(
                 $expected,
                 $actual,
