@@ -13,6 +13,22 @@ use PHPUnit\Framework\AssertionFailedError;
 class JsonSameAsArrayTest extends UnitTestCase
 {
     /**
+     * Asserts that if the expected array order is different that the json order that we succeed.
+     *
+     * @return void
+     */
+    public function testArrayOrderDoesntMatter(): void
+    {
+        $json = '{"abc": "xyz", "bcd": "yza"}';
+        $expected = ['bcd' => 'yza', 'abc' => 'xyz'];
+
+        $constraint = new JsonSameAsArray($expected);
+        $passes = $constraint->evaluate($json, '', true);
+
+        self::assertTrue($passes);
+    }
+
+    /**
      * Test to make sure if arrays match, constraint passes.
      *
      * @return void

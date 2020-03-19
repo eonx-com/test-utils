@@ -39,7 +39,7 @@ class AssertResponseTest extends UnitTestCase
             'response' => new Response('{"abc": "xyz"}', 202, ['content-type' => 'application/json']),
             'expectedStatus' => 202,
             'expectedContent' => [],
-            'exception' => new AssertionFailedError('Failed asserting that two arrays are identical.')
+            'exception' => new AssertionFailedError('Failed asserting that two arrays are equal.')
         ];
 
         yield 'Response can be matched fuzzily' => [

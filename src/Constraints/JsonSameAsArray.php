@@ -8,7 +8,6 @@ use Eonx\TestUtils\Helpers\ApplyFuzziness;
 use Eonx\TestUtils\Helpers\Interfaces\ApplyFuzzinessInterface;
 use PHPUnit\Framework\Constraint\Constraint;
 use PHPUnit\Framework\Constraint\IsEqual;
-use PHPUnit\Framework\Constraint\IsIdentical;
 use PHPUnit\Framework\Constraint\IsJson;
 use SebastianBergmann\Comparator\Factory;
 
@@ -66,9 +65,9 @@ class JsonSameAsArray extends Constraint
         $scalarComparator = new ScalarComparator();
         Factory::getInstance()->register($scalarComparator);
 
-        $isSame = new IsEqual($this->expected);
+        $isEqual = new IsEqual($this->expected);
 
-        $result = $isSame->evaluate($fuzzyActual, $description, $returnResult);
+        $result = $isEqual->evaluate($fuzzyActual, $description, $returnResult);
 
         Factory::getInstance()->unregister($scalarComparator);
 

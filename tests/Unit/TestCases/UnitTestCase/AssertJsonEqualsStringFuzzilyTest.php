@@ -5,6 +5,8 @@ namespace Tests\Eonx\TestUtils\Unit\TestCases\UnitTestCase;
 
 use Eonx\TestUtils\TestCases\UnitTestCase;
 use PHPUnit\Framework\AssertionFailedError;
+use PHPUnit\Framework\ExpectationFailedException;
+use SebastianBergmann\Comparator\ComparisonFailure;
 
 /**
  * @covers \Eonx\TestUtils\TestCases\UnitTestCase::assertJsonEqualsStringFuzzily
@@ -39,8 +41,8 @@ class AssertJsonEqualsStringFuzzilyTest extends UnitTestCase
         $json = '{"abc": "xyz", "date": "2019-10-10T01:04:45Z"}';
         $expected = ['xyz' => 'abc', 'date' => ':fuzzy:'];
 
-        $this->expectException(AssertionFailedError::class);
-        $this->expectExceptionMessage('Failed asserting that two arrays are identical.');
+        $this->expectException(ExpectationFailedException::class);
+        $this->expectExceptionMessage('Failed asserting that two arrays are equal.');
 
         self::assertJsonEqualsStringFuzzily($expected, $json);
     }
