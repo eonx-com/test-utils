@@ -3,11 +3,13 @@ declare(strict_types=1);
 
 namespace Eonx\TestUtils\Constraints;
 
+use Eonx\TestUtils\Comparators\ScalarComparator;
 use Eonx\TestUtils\Helpers\ApplyFuzziness;
 use Eonx\TestUtils\Helpers\Interfaces\ApplyFuzzinessInterface;
 use PHPUnit\Framework\Constraint\Constraint;
-use PHPUnit\Framework\Constraint\IsIdentical;
+use PHPUnit\Framework\Constraint\IsEqual;
 use PHPUnit\Framework\Constraint\IsJson;
+use SebastianBergmann\Comparator\Factory;
 
 class JsonSameAsArray extends Constraint
 {
@@ -59,8 +61,17 @@ class JsonSameAsArray extends Constraint
             ':fuzzy:'
         );
 
-        $isSame = new IsIdentical($this->expected);
-        return $isSame->evaluate($fuzzyActual, $description, $returnResult);
+        // Override IsEqual scalar comparisons to be strong.
+        $scalarComparator = new ScalarComparator();
+        Factory::getInstance()->register($scalarComparator);
+
+        $isEqual = new IsEqual($this->expected);
+
+        $result = $isEqual->evaluate($fuzzyActual, $description, $returnResult);
+
+        Factory::getInstance()->unregister($scalarComparator);
+
+        return $result;
     }
 
     /**
