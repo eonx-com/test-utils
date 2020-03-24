@@ -44,6 +44,8 @@ class RequestProperties extends Constraint
      *
      * @return bool|null
      *
+     * @throws \ReflectionException
+     *
      * @noinspection PhpMissingParentCallCommonInspection
      *
      * @SuppressWarnings(PHPMD.BooleanArgumentFlag) Designed by base phpunit constraint.

@@ -49,6 +49,41 @@ class ArraySameWithDatesTest extends UnitTestCase
     }
 
     /**
+     * Array Order doesnt matter
+     *
+     * @return void
+     *
+     * @throws \Exception
+     */
+    public function testEvaluateUnorderedArray(): void
+    {
+        $actual = [
+            'random' => 'value',
+            'date' => new DateTime('2019-10-10T00:00:00Z'),
+            'deep' => [
+                'deeper' => [
+                    'date' => new DateTime('2019-10-10T00:00:00+0000'),
+                ]
+            ]
+        ];
+
+        $expected = [
+            'date' => new DateTime('2019-10-10T00:00:00Z'),
+            'deep' => [
+                'deeper' => [
+                    'date' => new DateTime('2019-10-10T00:00:00+0000'),
+                ]
+            ],
+            'random' => 'value',
+        ];
+
+        $constraint = new ArraySameWithDates($expected);
+        $result = $constraint->evaluate($actual, '', true);
+
+        self::assertTrue($result);
+    }
+
+    /**
      * Test evaluate fails when the arrays don't match.
      *
      * @return void
