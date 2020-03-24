@@ -52,6 +52,18 @@ class RequestPropertiesTest extends UnitTestCase
             'exception' => null,
             'diffGenerated' => false
         ];
+
+        yield 'alpha doesnt matter.' => [
+            'object' => new TestRequestStub(true, 'John'),
+            'expected' => [
+                'active' => true,
+                'deeper' => null,
+                'evenDeeper' => [],
+                'name' => 'John',
+            ],
+            'exception' => null,
+            'diffGenerated' => false
+        ];
     }
 
     /**
@@ -63,6 +75,8 @@ class RequestPropertiesTest extends UnitTestCase
      * @param bool $diffGenerated
      *
      * @return void
+     *
+     * @throws \ReflectionException
      *
      * @dataProvider generateTestCases
      */
@@ -107,6 +121,8 @@ class RequestPropertiesTest extends UnitTestCase
      * Evaluate can be asked to return boolean instead of throwing an error.
      *
      * @return void
+     *
+     * @throws \ReflectionException
      */
     public function testEvaluateReturnsBoolean(): void
     {

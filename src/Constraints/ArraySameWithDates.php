@@ -4,8 +4,10 @@ declare(strict_types=1);
 namespace Eonx\TestUtils\Constraints;
 
 use DateTimeInterface;
+use Eonx\TestUtils\Comparators\ScalarComparator;
 use PHPUnit\Framework\Constraint\Constraint;
-use PHPUnit\Framework\Constraint\IsIdentical;
+use PHPUnit\Framework\Constraint\IsEqual;
+use SebastianBergmann\Comparator\Factory;
 
 class ArraySameWithDates extends Constraint
 {
@@ -63,10 +65,17 @@ class ArraySameWithDates extends Constraint
         \array_walk_recursive($this->expected, $format);
         \array_walk_recursive($other, $format);
 
-        // Check that two arrays are identical.
-        $constraint = new IsIdentical($this->expected);
+        // Override IsEqual scalar comparisons to be strong.
+        $scalarComparator = new ScalarComparator();
+        Factory::getInstance()->register($scalarComparator);
 
-        return $constraint->evaluate($other, $description, $returnResult);
+        $isEqual = new IsEqual($this->expected);
+
+        $result = $isEqual->evaluate($other, $description, $returnResult);
+
+        Factory::getInstance()->unregister($scalarComparator);
+
+        return $result;
     }
 
     /**

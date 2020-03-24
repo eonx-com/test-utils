@@ -64,7 +64,7 @@ class AssertArraySameWithDatesTest extends UnitTestCase
         ];
 
         $this->expectException(AssertionFailedError::class);
-        $this->expectExceptionMessage('Failed asserting that two arrays are identical.');
+        $this->expectExceptionMessage('Failed asserting that two arrays are equal.');
 
         self::assertArraySameWithDates($expected, $actual);
     }
@@ -90,7 +90,7 @@ class AssertArraySameWithDatesTest extends UnitTestCase
         ];
 
         $this->expectException(AssertionFailedError::class);
-        $this->expectExceptionMessage('Failed asserting that two arrays are identical.');
+        $this->expectExceptionMessage('Failed asserting that two arrays are equal.');
 
         self::assertArraySameWithDates($expected, $actual);
     }
