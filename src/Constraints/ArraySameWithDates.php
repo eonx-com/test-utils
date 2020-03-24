@@ -7,7 +7,6 @@ use DateTimeInterface;
 use Eonx\TestUtils\Comparators\ScalarComparator;
 use PHPUnit\Framework\Constraint\Constraint;
 use PHPUnit\Framework\Constraint\IsEqual;
-use PHPUnit\Framework\Constraint\IsIdentical;
 use SebastianBergmann\Comparator\Factory;
 
 class ArraySameWithDates extends Constraint
