@@ -10,6 +10,14 @@ use SebastianBergmann\Comparator\Factory;
 
 class ArrayComparatorTest extends UnitTestCase
 {
+    /**
+     * Tests that the exception containing the comparison does not truncate values for display.
+     *
+     * @return void
+     *
+     * @SuppressWarnings(PHPMD.StaticAccess)
+     * @SuppressWarnings(PHPMD.EmptyCatchBlock)
+     */
     public function testValuesNotShortened(): void
     {
         $comparator = new ArrayComparator();

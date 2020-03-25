@@ -23,12 +23,14 @@ class ArrayComparator extends BaseArrayComparator
             /**
              * Overridden so that arrays are not shortened.
              *
-             * {@inheritdoc}
-             *
              * @noinspection PhpMissingParentCallCommonInspection
              * @noinspection MultipleReturnStatementsInspection
+             *
+             * @param mixed $value
+             *
+             * @return string
              */
-            public function shortenedExport($value)
+            public function shortenedExport($value) // phpcs:ignore
             {
                 if (\is_string($value)) {
                     return \str_replace("\n", '', $this->export($value));
