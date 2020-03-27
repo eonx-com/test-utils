@@ -109,6 +109,17 @@ class TestRequestStub implements RequestObjectInterface
     }
 
     /**
+     * Method to test that the request parser only returns methods that begin with is|get, not
+     * that have is|get somewhere.
+     *
+     * @return string
+     */
+    public function methodDoesNotGetThing(): string
+    {
+        return 'wont-appear-in-stuff';
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function resolveValidationGroups(): array

@@ -30,7 +30,7 @@ class RequestPropertiesParser implements RequestPropertiesParserInterface
                 continue;
             }
 
-            if (\preg_match('/(is|get)(.*)/', $method->getName(), $matches) !== 1 ||
+            if (\preg_match('/^(is|get)(.*)/', $method->getName(), $matches) !== 1 ||
                 ($matches[2] ?? null) === null) {
                 continue;
             }
